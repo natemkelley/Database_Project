@@ -1,0 +1,137 @@
+<html>
+
+<head>
+    <title>Node.Js APIs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+        <!-- Latest compiled and minified CSS -->
+        <
+        link rel = "stylesheet"
+        href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+
+            <!-- jQuery library -->
+            <
+            script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" >
+
+    </script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5  col-sm-5">
+                <form class="form-group">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <h3>Weather for a Utah City: </h3>
+                            <input placeholder="Example: Park City, Manti, Logan" type="text" id="cityField" value="" class="form-control">
+                            <br>
+                            <p><strong>Suggestion:</strong> <span id="txtHint">Empty</span>
+                            </p>
+                        </div>
+                        <div class="form-group">
+                            <p><strong>Current Weather:</strong> <span id="displayCity">Please enter a city</span></p>
+
+                            <div id="weather">No weather data
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1">
+                <form class="form-group">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <h3>Search the dictionary:</h3>
+                            <input placeholder="Enter a word" type="text" id="searchOwl" value="" class="form-control">
+                        </div>
+                    </div>
+                </form>
+                <h1 id=word></h1>
+                <span id="definition"></span>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    $(document).ready(function() {
+        $("#cityField").keyup(function() {
+            var url = "/getcity?q=" + $("#cityField").val();
+            $.getJSON(url, function(data) {
+                var everything;
+                everything = "<ul>";
+                $.each(data, function(i, item) {
+                    everything += "<li> " + data[i].city + "</li>";
+                });
+                everything += "</ul>";
+                $("#txtHint").html(everything);
+            });
+
+        });
+
+        $("#cityField").keyup(function(e) {
+            var value = $("#cityField").val();
+            $("#displayCity").text(value);
+
+            console.log(value);
+            e.preventDefault();
+
+            var myurl = "https://api.wunderground.com/api/6be293f3842288c5/geolookup/conditions/q/Utah/"
+            myurl += value;
+            myurl += ".json";
+            console.log("myurl= " + myurl);
+            $.ajax({
+                url: myurl,
+                dataType: "json",
+                success: function(parsed_json) {
+                    var location = parsed_json['location']['city'];
+                    var temp_string = parsed_json['current_observation']['temperature_string'];
+                    var current_weather = parsed_json['current_observation']['weather'];
+                    everything = "<ul>";
+                    everything += "<li>Location: " + location;
+                    everything += "<li>Temperature: " + temp_string;
+                    everything += "<li>Weather: " + current_weather;
+                    everything += "</ul>";
+                    $("#weather").html(everything);
+                }
+            });
+
+        });
+
+        $("#searchOwl").keyup(function() {
+            var url = "/getword?q=" + $("#searchOwl").val();
+            $.getJSON(url, function(data) {
+                var everything;
+                everything = "<ul>";
+                $.each(data, function(i, item) {
+                    everything += "<li> " + data[i].defenition + "</li>";
+                });
+                everything += "</ul>";
+                $("#definition").html(everything);
+                $("#word").html($("#searchOwl").val());
+            });
+
+        });
+    });
+
+</script>
+
+
+
+</html>
