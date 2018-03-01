@@ -20,7 +20,7 @@ CREATE TABLE employee(
     years_employed INT(100),
     salary INT(1),
     hourly INT(1),
-    personID VARCHAR(255),
+    personID INT,
     PRIMARY KEY (employeeID),
     FOREIGN KEY(personID) REFERENCES person(personID)
 );
