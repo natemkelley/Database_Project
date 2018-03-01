@@ -55,6 +55,13 @@ CREATE TABLE instructor(
 INSERT INTO instructor
 VALUES ( 1, 1);
 
+CREATE TABLE peak(
+    peakID  int NOT NULL AUTO_INCREMENT,
+    elevation INT,
+    name VARCHAR(255),
+    PRIMARY KEY (peakID)
+);
+
 CREATE TABLE ski_patrol(
     toboggan_trained INT(1),
     avalanche_trained INT(1),
@@ -78,7 +85,7 @@ CREATE TABLE credential_card(
     ID_Number int NOT NULL AUTO_INCREMENT,
     photo VARCHAR(255),
     employeeID INT,
-    PRIMARY KEY (ID_Number)
+    PRIMARY KEY (ID_Number),
     FOREIGN KEY(employeeID) REFERENCES employee(employeeID)
 );
 
