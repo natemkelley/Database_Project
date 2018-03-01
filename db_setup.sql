@@ -30,19 +30,19 @@ VALUES ( '30,000', '2', '0', '1', 1);
 
 CREATE TABLE dbadmin(
     adminID Integer PRIMARY KEY AUTOINCREMENT,
-    personID VARCHAR(255),
+    personID INT,
     FOREIGN KEY(personID) REFERENCES person(personID)
 );
 
 CREATE TABLE manager(
     managerID Integer PRIMARY KEY AUTOINCREMENT,
-    employeeID VARCHAR(255),
+    employeeID INT,
     FOREIGN KEY(employeeID) REFERENCES employee(employeeID)
 );
 
 CREATE TABLE instructor(
-    employeeID VARCHAR(255),
-    managerID VARCHAR(255),
+    employeeID INT,
+    managerID INT,
     FOREIGN KEY(managerID) REFERENCES manager(managerID),
     FOREIGN KEY(employeeID) REFERENCES employee(employeeID)
 );
@@ -53,9 +53,9 @@ VALUES ( 1, 2);
 CREATE TABLE ski_patrol(
     toboggan_trained INT(1),
     avalanche_trained INT(1),
-    employeeID VARCHAR(255),
-    managerID VARCHAR(255),
-    peakID VARCHAR(255),
+    employeeID INT,
+    managerID INT,
+    peakID INT,
     FOREIGN KEY(managerID) REFERENCES manager(managerID),
     FOREIGN KEY(employeeID) REFERENCES employee(employeeID),
     FOREIGN KEY(peakID) REFERENCES peak(peakID)
@@ -63,56 +63,61 @@ CREATE TABLE ski_patrol(
 
 CREATE TABLE facilities(
     trained INT(1),
-    employeeID VARCHAR(255),
-    managerID VARCHAR(255),
+    employeeID INT,
+    managerID INT,
     FOREIGN KEY(managerID) REFERENCES manager(managerID),
     FOREIGN KEY(employeeID) REFERENCES employee(employeeID)
 );
 
 CREATE TABLE credential_card(
-    ID_Number Integer PRIMARY KEY AUTOINCREMENT,
+    ID_Number int NOT NULL AUTO_INCREMENT,
     photo VARCHAR(255),
-    employeeID VARCHAR(255),
+    employeeID INT,
+    PRIMARY KEY (ID_Number)
     FOREIGN KEY(employeeID) REFERENCES employee(employeeID)
 );
 
 CREATE TABLE customer(
-    customer_ID Integer PRIMARY KEY AUTOINCREMENT,
+    customer_ID int NOT NULL AUTO_INCREMENT,
     classes VARCHAR(255),
     news_letter VARCHAR(255),
     vertical_feet_skied INT(800000),
     lifts_ridden INT(20000),
     days_at_resort INT (365),
-    personID VARCHAR(255),
+    personID INT,
+    PRIMARY KEY (customer_ID)
     FOREIGN KEY(personID) REFERENCES person(personID)
 );
 
 CREATE TABLE credit_cart_info(
     card_number INT(800000),
     verified INT(1),
-    customer_ID VARCHAR(255),
+    customer_ID INT,
     FOREIGN KEY(customer_ID) REFERENCES customer(customer_ID)
 );
 
 CREATE TABLE day_pass(
-    pass_ID Integer PRIMARY KEY AUTOINCREMENT,
+    pass_ID int NOT NULL AUTO_INCREMENT,
     the_date VARCHAR(255),
-    customer_ID VARCHAR(255),
+    customer_ID INT,
+    PRIMARY KEY (pass_ID)
     FOREIGN KEY(customer_ID) REFERENCES customer(customer_ID)
 );
 
 CREATE TABLE peak(
-    peakID Integer PRIMARY KEY AUTOINCREMENT,
+    peakID  int NOT NULL AUTO_INCREMENT,
     elevation INT(30000),
-    name VARCHAR(255)
+    name VARCHAR(255),
+    PRIMARY KEY (peakID)
 );
 
 CREATE TABLE lift(
-    liftID Integer PRIMARY KEY AUTOINCREMENT,
+    liftID  int NOT NULL AUTO_INCREMENT,
     open_status INT(1),
     name VARCHAR(255),
     vertical_feet INT(10000),
-    peakID INT(255),
+    peakID INT,
+    PRIMARY KEY (liftID)
     FOREIGN KEY(peakID) REFERENCES peak(peakID)
 );
 
@@ -122,7 +127,7 @@ CREATE TABLE run(
     length INT(20000),
     snow_depth INT(20000),
     difficulty VARCHAR(255),
-    liftID VARCHAR(255),
+    liftID INT,
     FOREIGN KEY(liftID) REFERENCES lift(liftID)
 );
 
@@ -130,13 +135,13 @@ CREATE TABLE terrain_park(
     features VARCHAR(40000),
     name varchar(255),
     open_status INT(1),
-    liftID VARCHAR(255),
+    liftID INT,
     FOREIGN KEY(liftID) REFERENCES lift(liftID)
 );
 
 CREATE TABLE mogul_track(
     flags_placed INT(1),
     mogul_depth INT(50),
-    liftID VARCHAR(255),
+    liftID INT,
     FOREIGN KEY(liftID) REFERENCES lift(liftID)
 );
