@@ -42,6 +42,9 @@ CREATE TABLE manager(
     FOREIGN KEY(employeeID) REFERENCES employee(employeeID)
 );
 
+INSERT INTO manager (employeeID)
+VALUES ( 1);
+
 CREATE TABLE instructor(
     employeeID INT,
     managerID INT,
@@ -50,7 +53,7 @@ CREATE TABLE instructor(
 );
 
 INSERT INTO instructor
-VALUES ( 1, 2);
+VALUES ( 1, 1);
 
 CREATE TABLE ski_patrol(
     toboggan_trained INT(1),
