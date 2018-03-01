@@ -29,14 +29,16 @@ INSERT INTO employee (wage,years_employed,salary,hourly, personID)
 VALUES ( '30,000', '2', '0', '1', 1);
 
 CREATE TABLE dbadmin(
-    adminID Integer PRIMARY KEY AUTOINCREMENT,
+    adminID int NOT NULL AUTO_INCREMENT,
     personID INT,
+    PRIMARY KEY (adminID),
     FOREIGN KEY(personID) REFERENCES person(personID)
 );
 
 CREATE TABLE manager(
-    managerID Integer PRIMARY KEY AUTOINCREMENT,
+    managerID int NOT NULL AUTO_INCREMENT,
     employeeID INT,
+    PRIMARY KEY (managerID),
     FOREIGN KEY(employeeID) REFERENCES employee(employeeID)
 );
 
