@@ -93,16 +93,16 @@ CREATE TABLE customer(
     customer_ID int NOT NULL AUTO_INCREMENT,
     classes VARCHAR(255),
     news_letter VARCHAR(255),
-    vertical_feet_skied INT(800000),
-    lifts_ridden INT(20000),
-    days_at_resort INT (365),
+    vertical_feet_skied INT,
+    lifts_ridden INT,
+    days_at_resort INT,
     personID INT,
-    PRIMARY KEY (customer_ID)
+    PRIMARY KEY (customer_ID),
     FOREIGN KEY(personID) REFERENCES person(personID)
 );
 
 CREATE TABLE credit_cart_info(
-    card_number INT(800000),
+    card_number INT,
     verified INT(1),
     customer_ID INT,
     FOREIGN KEY(customer_ID) REFERENCES customer(customer_ID)
@@ -112,32 +112,25 @@ CREATE TABLE day_pass(
     pass_ID int NOT NULL AUTO_INCREMENT,
     the_date VARCHAR(255),
     customer_ID INT,
-    PRIMARY KEY (pass_ID)
+    PRIMARY KEY (pass_ID),
     FOREIGN KEY(customer_ID) REFERENCES customer(customer_ID)
-);
-
-CREATE TABLE peak(
-    peakID  int NOT NULL AUTO_INCREMENT,
-    elevation INT(30000),
-    name VARCHAR(255),
-    PRIMARY KEY (peakID)
 );
 
 CREATE TABLE lift(
     liftID  int NOT NULL AUTO_INCREMENT,
     open_status INT(1),
     name VARCHAR(255),
-    vertical_feet INT(10000),
+    vertical_feet INT,
     peakID INT,
-    PRIMARY KEY (liftID)
+    PRIMARY KEY (liftID),
     FOREIGN KEY(peakID) REFERENCES peak(peakID)
 );
 
 CREATE TABLE run(
     open_status INT(1),
     name VARCHAR(255),
-    length INT(20000),
-    snow_depth INT(20000),
+    length INT,
+    snow_depth INT,
     difficulty VARCHAR(255),
     liftID INT,
     FOREIGN KEY(liftID) REFERENCES lift(liftID)
