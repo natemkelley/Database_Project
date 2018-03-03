@@ -3,13 +3,44 @@ var router = express.Router();
 var request = require('request')
 var fs = require('fs');
 const https = require('https');
+//IT350 Specific
+var mysql = require('mysql');
+
+var db_con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "Chegagg1o",
+    database: "it350"
+});
+
+db_con.connect();
+
+
+
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.sendFile('weather.html', {
+    res.sendFile('admin.html', {
         root: 'public'
     });
 });
+
+router.get('/test', function (req, res, next) {
+    var databaseresults = "swag";
+    var query = req.query.q;
+    console.log(query);
+
+    db_con.query("SELECT * FROM employee", function (err, result, fields) {
+        if (err) {
+            response.status(400).send('Error in database operation');
+            throw err;
+        } else {
+            console.log(result);
+            res.json(result);
+        }
+    });
+});
+
 
 router.get('/getcity', function (req, res, next) {
     fs.readFile(__dirname + '/cities.dat.txt', function (err, data) {
@@ -36,10 +67,7 @@ router.get('/getcity', function (req, res, next) {
         }
         res.status(200).json(jsonresults)
     });
-
 });
-
-
 router.get('/getword', function (req, res, next) {
     var userinput = req.query.q.toLowerCase();
     var myWord = "https://owlbot.info/api/v1/dictionary/" + userinput;
@@ -47,6 +75,5 @@ router.get('/getword', function (req, res, next) {
     request(myWord).pipe(res);
 
 });
-
 
 module.exports = router;

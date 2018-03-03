@@ -57,24 +57,6 @@ app.use(function (err, req, res, next) {
     });
 });
 
-//IT350 Specific
-var mysql = require('mysql');
 
-
-var db_con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Chegagg1o",
-    database: "it350"
-});
-
-
-db_con.connect(function (err) {
-    if (err) throw err;
-    db_con.query("SELECT * FROM employee", function (err, result, fields) {
-        if (err) throw err;
-        console.log(result);
-    });
-});
 
 module.exports = app;
