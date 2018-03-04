@@ -126,8 +126,8 @@ CREATE TABLE run(
 );
 
 CREATE TABLE terrain_park(
-    features VARCHAR(40000),
     name varchar(255),
+    features VARCHAR(40000),
     open_status INT(1),
     liftID INT,
     FOREIGN KEY(liftID) REFERENCES lift(liftID)

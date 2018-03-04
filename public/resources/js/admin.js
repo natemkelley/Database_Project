@@ -96,3 +96,27 @@ function displayResults(data, datID) {
     divContainer.innerHTML = "";
     divContainer.appendChild(table);
 }
+
+$("#whattoadd").on("change", function () {
+    var value = $(this).val();
+    console.log(value);
+    $('.level2').hide();
+    $('.level3').hide();
+    $('.level4').hide();
+
+    $("#" + value).fadeIn();
+})
+
+$("#whatpersontoadd").on("change", function () {
+    var value = $(this).val();
+    console.log(value);
+    $('.level3').hide();
+    $("#" + value).fadeIn();
+})
+
+$("#typesofemp").on("change", function () {
+    var value = $(this).val();
+    console.log(value);
+    $('.level4').hide();
+    $("#" + value).fadeIn();
+})

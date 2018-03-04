@@ -9,10 +9,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <link rel="stylesheet" href="resources/css/style.css">
-    <script src="resources/js/admin.js"></script>
-
 </head>
 
 
@@ -34,7 +30,6 @@
                     <select class="form-control" id="getTable">
                         <option>Person</option>
                         <option>Employee</option>
-                        <option>Manager</option>
                         <option>DBadmin</option>
                         <option>Instructor</option>
                         <option>ski_patrol</option>
@@ -83,14 +78,268 @@
         <div class="col-md-8 col-md-offset-2 getresults">
             <div class="form-horizontal">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="customSQL">
-                </div>
-
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-default btn-admin" onclick="customSQL()">Submit</button>
+                    <label for="whattoadd">What do you want to add:</label>
+                    <select class="form-control" id="whattoadd">
+                        <option>-</option>
+                        <option value="personSelect">Person</option>
+                        <option value="peakSelect">Peak</option>
+                        <option value="liftSelect">Lift</option>
+                        <option value="creditcardSelect">Credit Card</option>
+                        <option value="daypassSelect">Day Pass</option>
+                        <option value="runSelect">Run</option>
+                        <option value="terrainparkSelect">Terrain Park</option>
+                        <option value="mogulrunSelect">Mogul Run</option>
+                    </select>
                 </div>
             </div>
+
+            <div id="personSelect" class="level2" style="display:none">
+                <div class="form-group">
+                    <label>First Name:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Last Name:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Middle Name:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>City:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>State:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Zip:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Phone:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>What kind of person do you want to add:</label>
+                    <select class="form-control" id="whatpersontoadd">
+                        <option>-</option>
+                        <option value="customerSelect">Customer</option>
+                        <option value="employeeSelect">Employee</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="customerSelect" class="level3" style="display:none">
+                <div class="form-group">
+                    <label>Classes:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <p>Do you want a news letter?</p>
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio">No
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio">Yes
+                    </label>
+                </div>
+            </div>
+
+            <div id="employeeSelect" class="level3" style="display:none">
+                <div class="form-group">
+                    <label>Typer of Employee:</label>
+                    <select class="form-control" id="typesofemp">
+                        <option value="dbadminSelect">dbadmin</option>
+                        <option value="skipatrolSelect">Ski Patrol</option>
+                        <option value="instructorSelect">Instructor</option>
+                        <option value="facilitiesSelect">Facilities</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Wage:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Years Employed:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Manager:</label>
+                    <select class="form-control" id="themanagers">
+                        <option>-</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <p>How is payment happening?</p>
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio">Hourly
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio">Salary
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>credential card photo url:</label>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+
+            <div id="instructorSelect" class="level4" style="display:none">
+                <div class="form-group">
+                    <label>Classes:</label>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+
+            <div id="facilitiesSelect" class="level4" style="display:none">
+                <div class="form-group">
+                    <p>Trained:</p>
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio">No
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio">Yes
+                    </label> </div>
+            </div>
+
+            <div id="skipatrolSelect" class="level4" style="display:none">
+                <div class="form-group">
+                    <label>Peak:</label>
+                    <select class="form-control" id="thepeaks">
+                        <option value="-">-</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <p>Toboggan Trained?</p>
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio">No
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio">Yes
+                    </label>
+                </div>
+                <div class="form-group">
+                    <p>Avalanche Trained?</p>
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio">No
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio">Yes
+                    </label>
+                </div>
+            </div>
+
+
+
+            <div id="peakSelect" class="level2" style="display:none">
+                <div class="form-group">
+                    <label>Peak Name:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Elevation:</label>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+
+            <div id="liftSelect" class="level2" style="display:none">
+                <div class="form-group">
+                    <label>Lift Name:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Vertical Feet:</label>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+
+            <div id="creditcardSelect" class="level2" style="display:none">
+                <div class="form-group">
+                    <label>Credit Card Number:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <p>Card Verified?</p>
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio">No
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio">Yes
+                    </label>
+                </div>
+            </div>
+
+            <div id="daypassSelect" class="level2" style="display:none">
+                <div class="form-group">
+                    <label>Date:</label>
+                    <input type="date" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Customer:</label>
+                    <label>Peak:</label>
+                    <select class="form-control" id="thecustomers">
+                        <option value="-">-</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="runSelect" class="level2" style="display:none">
+                <div class="form-group">
+                    <label>Run Name:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Length:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Snow Depth:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Difficulty:</label>
+                    <select class="form-control" id="thecustomers">
+                        <option value="Green Cirlce">Green Circle</option>
+                        <option value="Blue Square">Blue Square</option>
+                        <option value="Black Diamond">Black Diamond</option>
+                        <option value="Double Black Diamond">Double Black Diamond</option>
+                    </select> </div>
+            </div>
+
+            <div id="terrainparkSelect" class="level2" style="display:none">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Features:</label>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+
+            <div id="mogulrunSelect" class="level2" style="display:none">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Flags Placed:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Mogul Depht:</label>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-default btn-admin" onclick="customSQL()">Submit</button>
+            </div>
+
+
         </div>
         <div class="col-md-12 display results">
             <h3 class="text-center" id="resultsHeader">Status</h3>
@@ -99,5 +348,8 @@
     </div>
 
 </body>
+
+<link rel="stylesheet" href="resources/css/style.css">
+<script src="resources/js/admin.js"></script>
 
 </html>
