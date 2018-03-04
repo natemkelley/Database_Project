@@ -40,7 +40,7 @@ router.get('/getResults', function (req, res, next) {
 
 router.get('/customSQL', function (req, res, next) {
     var databaseresults = "swag";
-    var query = req.query.q.toLowerCase();
+    var query = req.query.q;
     console.log(query);
 
 

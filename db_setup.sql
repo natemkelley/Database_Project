@@ -1,3 +1,8 @@
+DROP DATABASE IF EXISTS it350;
+
+CREATE DATABASE IF NOT EXISTS it350;
+USE it350;
+
 CREATE TABLE person(
     personID int NOT NULL AUTO_INCREMENT,
     fName VARCHAR(255),
@@ -20,40 +25,28 @@ CREATE TABLE employee(
     years_employed INT(100),
     salary INT(1),
     hourly INT(1),
+    is_manager INT(1),
     personID INT,
     PRIMARY KEY (employeeID),
     FOREIGN KEY(personID) REFERENCES person(personID)
 );
 
-INSERT INTO employee (wage,years_employed,salary,hourly, personID)
-VALUES ( '30,000', '2', '0', '1', 1);
+INSERT INTO employee (wage,years_employed,salary,hourly, is_manager, personID)
+VALUES ( '30,000', '5', 0, 1, 1, 1);
 
 CREATE TABLE dbadmin(
-    adminID int NOT NULL AUTO_INCREMENT,
     personID INT,
-    PRIMARY KEY (adminID),
     FOREIGN KEY(personID) REFERENCES person(personID)
 );
 
-CREATE TABLE manager(
-    managerID int NOT NULL AUTO_INCREMENT,
-    employeeID INT,
-    PRIMARY KEY (managerID),
-    FOREIGN KEY(employeeID) REFERENCES employee(employeeID)
-);
-
-INSERT INTO manager (employeeID)
-VALUES ( 1);
-
 CREATE TABLE instructor(
+    classes VARCHAR(255),
     employeeID INT,
-    managerID INT,
-    FOREIGN KEY(managerID) REFERENCES manager(managerID),
     FOREIGN KEY(employeeID) REFERENCES employee(employeeID)
 );
 
 INSERT INTO instructor
-VALUES ( 1, 1);
+VALUES ("Moguls, Getting Big Air, Ski Zumba",1);
 
 CREATE TABLE peak(
     peakID  int NOT NULL AUTO_INCREMENT,
@@ -66,9 +59,7 @@ CREATE TABLE ski_patrol(
     toboggan_trained INT(1),
     avalanche_trained INT(1),
     employeeID INT,
-    managerID INT,
     peakID INT,
-    FOREIGN KEY(managerID) REFERENCES manager(managerID),
     FOREIGN KEY(employeeID) REFERENCES employee(employeeID),
     FOREIGN KEY(peakID) REFERENCES peak(peakID)
 );
@@ -76,8 +67,6 @@ CREATE TABLE ski_patrol(
 CREATE TABLE facilities(
     trained INT(1),
     employeeID INT,
-    managerID INT,
-    FOREIGN KEY(managerID) REFERENCES manager(managerID),
     FOREIGN KEY(employeeID) REFERENCES employee(employeeID)
 );
 
