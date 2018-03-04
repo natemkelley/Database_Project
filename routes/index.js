@@ -16,8 +16,6 @@ var db_con = mysql.createConnection({
 db_con.connect();
 
 
-
-
 /* GET home page. */
 router.get('/', function (req, res, next) {
     res.sendFile('admin.html', {
@@ -25,20 +23,36 @@ router.get('/', function (req, res, next) {
     });
 });
 
-router.get('/test', function (req, res, next) {
+router.get('/getResults', function (req, res, next) {
     var databaseresults = "swag";
-    var query = req.query.q;
+    var query = req.query.q.toLowerCase();
     console.log(query);
 
-    db_con.query("SELECT * FROM employee", function (err, result, fields) {
+    db_con.query("SELECT * FROM " + query, function (err, result, fields) {
         if (err) {
-            response.status(400).send('Error in database operation');
-            throw err;
+            response.status(400).send('Error in database operation' + query);
+            //throw err;
         } else {
-            console.log(result);
             res.json(result);
         }
     });
+});
+
+router.get('/customSQL', function (req, res, next) {
+    var databaseresults = "swag";
+    var query = req.query.q.toLowerCase();
+    console.log(query);
+
+
+    db_con.query(query, function (err, result, fields) {
+        if (err) {
+            res.json(err);
+            return;
+        } else {
+            res.json(result);
+        }
+    });
+
 });
 
 

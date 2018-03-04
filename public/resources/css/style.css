@@ -1,3 +1,38 @@
 .btn-admin {
     float: right;
 }
+
+.showstuff {
+    padding: 35px;
+    background-color: rgb(195, 166, 225);
+}
+
+.showstuff h2 {
+    margin-bottom: 30px;
+}
+
+table {
+    width: 100%;
+}
+
+th {
+    font-weight: bold;
+    border-bottom: 1px solid #333;
+    padding-bottom: 8px;
+    text-transform: uppercase;
+    padding: 2px 4px;
+
+}
+
+td {
+    padding: 2px 4px;
+}
+
+tr:hover {
+    background-color: rgba(241, 241, 241, 0.25);
+}
+
+.customSQL {
+    background-color: aquamarine;
+    padding: 30px 10px;
+}
