@@ -60,31 +60,31 @@ function compilequery(query) {
             query = "SELECT  pe.fname as 'First Name', pe.mname as 'Middle Name', pe.lname as 'Last Name', pe.city, pe.state, pe.address, pe.zip, pe.phone, emp_e.hourly, emp_e.salary, emp_e.wage, emp_e.years_employed as 'Years Employed', fac.trained,CONCAT(pm.fname, ' ', pm.lname) as 'Manager Name' FROM person pe, person pm, employee emp_e, employee emp_m, facilities fac WHERE pe.personID=emp_e.personID AND pm.personID=emp_m.personID AND emp_e.employeeID=fac.employeeID AND emp_e.is_managed_by = emp_m.employeeID;";
             break;
         case 'credential_card':
-            query = "SELECT ID_number,fname,lname,mname, photo FROM person INNER JOIN employee ON person.personID=employee.personID INNER JOIN credential_card ON credential_card.employeeID=employee.employeeID";
+            query = "SELECT ID_number as 'ID Number', fname AS 'First Name',lname as 'Last Name',mname as 'Middle Name', photo FROM person INNER JOIN employee ON person.personID=employee.personID INNER JOIN credential_card ON credential_card.employeeID=employee.employeeID;";
             break;
         case 'customer':
-            query = "SELECT fname,lname,mname,city,state,address,zip,phone,classes, news_letter,vertical_feet_skied,lifts_ridden,days_at_resort FROM person INNER JOIN customer ON person.personID=customer.personID;";
+            query = "SELECT fname as 'First Name',lname as 'Last Name',mname as 'Middle Name',city,state,address,zip,phone,classes, news_letter as 'News Letter',vertical_feet_skied as 'Vertical Feet Skied',lifts_ridden 'Lifts Ridden',days_at_resort as 'Days at Resort' FROM person INNER JOIN customer ON person.personID=customer.personID;";
             break;
         case 'credit_card_info':
-            query = "SELECT fname, mname, lname, card_number, verified FROM person INNER JOIN customer ON person.personID=customer.personID INNER JOIN credit_card_info ON customer.customerID=credit_card_info.customerID;";
+            query = "SELECT fname as 'First Name', mname as'Middle Name', lname as'Last Name', card_number as'Card Number', verified FROM person INNER JOIN customer ON person.personID=customer.personID INNER JOIN credit_card_info ON customer.customerID=credit_card_info.customerID;";
             break;
         case 'day_pass':
-            query = "SELECT fname, mname, lname, the_date FROM person INNER JOIN customer ON person.personID=customer.personID INNER JOIN day_pass ON customer.customerID=day_pass.customerID;";
+            query = "SELECT fname as 'First Name', mname as 'Middle Name', lname as 'Last Name', the_date as 'The Date' FROM person INNER JOIN customer ON person.personID=customer.personID INNER JOIN day_pass ON customer.customerID=day_pass.customerID;";
             break;
         case 'lift':
-            query = "SELECT lift.name, lift.vertical_feet,lift.open_status, lift.peakid FROM lift INNER JOIN peak ON peak.peakID = lift.peakID;"
+            query = "SELECT lift.name, lift.vertical_feet,lift.open_status, peak.name as 'Peak' FROM lift, peak WHERE lift.peakid=peak.peakid;"
             break;
         case 'run':
-            query = "SELECT run.name, run.length, run.snow_depth, run.open_status, run.difficulty, run.liftid FROM run INNER JOIN lift ON lift.liftID=run.liftID;"
+            query = "SELECT run.name, run.length, run.snow_depth, run.open_status, run.difficulty, lift.name as 'Lift Access' FROM run, lift WHERE run.liftid = lift.liftid;"
             break;
         case 'terrain_park':
             query = "SELECT terrain_park.name, terrain_park.features, terrain_park.open_status, terrain_park.liftid FROM terrain_park INNER JOIN lift ON lift.liftID=terrain_park.liftID;"
             break;
         case 'terrain_park':
-            query = "SELECT terrain_park.name, terrain_park.features, terrain_park.open_status, terrain_park.liftid FROM terrain_park INNER JOIN lift ON lift.liftID=terrain_park.liftID;"
+            query = "SELECT terrain_park.name, terrain_park.features, terrain_park.open_status, lift.name as 'Lift Access' FROM terrain_park, lift WHERE lift.liftid=terrain_park.liftid;"
             break;
         case 'mogul_track':
-            query = "SELECT mogul_track.flags_placed, mogul_track.mogul_depth, mogul_track.liftid FROM mogul_track INNER JOIN lift ON lift.liftID = mogul_track.liftID;"
+            query = "SELECT mogul_track.flags_placed, mogul_track.mogul_depth, lift.name as 'Lift Access' FROM mogul_track, lift where lift.liftid=mogul_track.liftid;"
             break;
         default:
             query = false;
