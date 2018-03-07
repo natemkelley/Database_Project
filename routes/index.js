@@ -74,6 +74,18 @@ function compilequery(query) {
         case 'lift':
             query = "SELECT lift.name, lift.vertical_feet,lift.open_status, lift.peakid FROM lift INNER JOIN peak ON peak.peakID = lift.peakID;"
             break;
+        case 'run':
+            query = "SELECT run.name, run.length, run.snow_depth, run.open_status, run.difficulty, run.liftid FROM run INNER JOIN lift ON lift.liftID=run.liftID;"
+            break;
+        case 'terrain_park':
+            query = "SELECT terrain_park.name, terrain_park.features, terrain_park.open_status, terrain_park.liftid FROM terrain_park INNER JOIN lift ON lift.liftID=terrain_park.liftID;"
+            break;
+        case 'terrain_park':
+            query = "SELECT terrain_park.name, terrain_park.features, terrain_park.open_status, terrain_park.liftid FROM terrain_park INNER JOIN lift ON lift.liftID=terrain_park.liftID;"
+            break;
+        case 'mogul_track':
+            query = "SELECT mogul_track.flags_placed, mogul_track.mogul_depth, mogul_track.liftid FROM mogul_track INNER JOIN lift ON lift.liftID = mogul_track.liftID;"
+            break;
         default:
             query = false;
             break;

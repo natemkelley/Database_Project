@@ -175,6 +175,11 @@ CREATE TABLE run(
     FOREIGN KEY(liftID) REFERENCES lift(liftID)
 );
 
+INSERT INTO run (open_status, name,length, snow_depth, difficulty, liftID)
+VALUES (1, 'Homerun',2400,14,"Black Diamond",1);
+INSERT INTO run (open_status, name,length, snow_depth, difficulty, liftID)
+VALUES (1, 'Rerun',1400,24,"Green Circle",2);
+
 CREATE TABLE terrain_park(
     name varchar(255),
     features VARCHAR(40000),
@@ -183,12 +188,18 @@ CREATE TABLE terrain_park(
     FOREIGN KEY(liftID) REFERENCES lift(liftID)
 );
 
+INSERT INTO terrain_park  (name,features,open_status,liftID)
+VALUES ('Rerun',"1 Big Jump, 3 small kickers, 2 box rails",1,2);
+
 CREATE TABLE mogul_track(
     flags_placed INT(1),
     mogul_depth INT(50),
     liftID INT,
     FOREIGN KEY(liftID) REFERENCES lift(liftID)
 );
+
+INSERT INTO mogul_track  (flags_placed,mogul_depth,liftID)
+VALUES (1,3,1);
 
 #employee
 SELECT fname,lname,mname,city,state,address,zip,phone, hourly, salary,wage,years_employed,is_managed_by
@@ -237,7 +248,25 @@ INNER JOIN customer ON person.personID=customer.personID
 INNER JOIN day_pass ON customer.customerID=day_pass.customerID;
 
 #lift
-SELECT lift.name, lift.vertical_feet,lift.open_status, peakid
+SELECT lift.name, lift.vertical_feet,lift.open_status, lift.peakid
 FROM lift
 INNER JOIN peak 
 ON peak.peakID=lift.peakID;
+
+#run
+SELECT run.name, run.length, run.snow_depth, run.open_status, run.difficulty, run.liftid
+FROM run
+INNER JOIN lift
+ON lift.liftID=run.liftID;
+
+#terrain_park
+SELECT terrain_park.name, terrain_park.features, terrain_park.open_status, terrain_park.liftid
+FROM terrain_park
+INNER JOIN lift
+ON lift.liftID=terrain_park.liftID;
+
+#mogul_track
+SELECT flags_placed, mogul_depth, liftid
+FROM mogul_track
+INNER JOIN lift
+ON lift.liftID=mogul_track.liftID;
