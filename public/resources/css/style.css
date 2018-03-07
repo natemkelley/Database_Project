@@ -41,3 +41,7 @@ tr:hover {
     background-color: #ffeb7f;
     padding: 30px 10px;
 }
+
+.container {
+    width: 95%;
+}

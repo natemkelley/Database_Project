@@ -25,10 +25,15 @@ router.get('/', function (req, res, next) {
 
 router.get('/getResults', function (req, res, next) {
     var query = req.query.q.toLowerCase();
-    compilequery(query);
+    if (compilequery(query)) {
+        query = compilequery(query);
+    } else {
+        query = "SELECT * FROM " + query;
+
+    }
 
 
-    db_con.query("SELECT * FROM " + query, function (err, result, fields) {
+    db_con.query(query, function (err, result, fields) {
         if (err) {
             response.status(400).send('Error in database operation' + query);
             //throw err;
@@ -42,28 +47,37 @@ function compilequery(query) {
     console.log(query);
 
     switch (query) {
+        case 'instructor':
+            query = "SELECT fname,lname,mname,city,state,address,zip,phone, hourly, salary,wage,years_employed,is_managed_by, classes FROM person INNER JOIN employee ON person.personID=employee.personID INNER JOIN instructor ON instructor.employeeID=employee.employeeID;";
+            break;
         case 'dbadmin':
-            day = "Sunday";
+            query = "SELECT fname,lname,mname,city,state,address,zip,phone,hourly, salary,wage,years_employed,is_managed_by FROM person INNER JOIN employee ON person.personID=employee.personID INNER JOIN dbadmin ON dbadmin.employeeID=employee.employeeID;";
             break;
-        case 1:
-            day = "Monday";
+        case 'ski_patrol':
+            query = "SELECT fname,lname,mname,city,state,address,zip,phone,hourly, salary,wage,years_employed,is_managed_by, toboggan_trained, avalanche_trained, peakID FROM person INNER JOIN employee ON person.personID=employee.personID INNER JOIN ski_patrol ON ski_patrol.employeeID=employee.employeeID;";
             break;
-        case 2:
-            day = "Tuesday";
+        case 'facilities':
+            query = "SELECT fname,lname,mname,city,state,address,zip,phone,hourly, salary,wage,years_employed,is_managed_by, trained FROM person INNER JOIN employee ON person.personID=employee.personID INNER JOIN facilities ON facilities.employeeID=employee.employeeID;";
             break;
-        case 3:
-            day = "Wednesday";
+        case 'credential_card':
+            query = "SELECT ID_number,fname,lname,mname, photo FROM person INNER JOIN employee ON person.personID=employee.personID INNER JOIN credential_card ON credential_card.employeeID=employee.employeeID";
             break;
-        case 4:
-            day = "Thursday";
+        case 'customer':
+            query = "SELECT fname,lname,mname,city,state,address,zip,phone,classes, news_letter,vertical_feet_skied,lifts_ridden,days_at_resort FROM person INNER JOIN customer ON person.personID=customer.personID;";
             break;
-        case 5:
-            day = "Friday";
+        case 'credit_card_info':
+            query = "SELECT fname, mname, lname, card_number, verified FROM person INNER JOIN customer ON person.personID=customer.personID INNER JOIN credit_card_info ON customer.customerID=credit_card_info.customerID;";
             break;
-        case 6:
-            day = "Saturday";
+        case 'day_pass':
+            query = "SELECT fname, mname, lname, the_date FROM person INNER JOIN customer ON person.personID=customer.personID INNER JOIN day_pass ON customer.customerID=day_pass.customerID;";
+            break;
+        case 'lift':
+            query = "SELECT lift.name, lift.vertical_feet,lift.open_status, lift.peakid FROM lift INNER JOIN peak ON peak.peakID = lift.peakID;"
+            break;
+        default:
+            query = false;
+            break;
     }
-
 
     return query;
 }
