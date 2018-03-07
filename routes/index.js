@@ -32,13 +32,13 @@ router.get('/getResults', function (req, res, next) {
 
     }
 
-
     db_con.query(query, function (err, result, fields) {
         if (err) {
             response.status(400).send('Error in database operation' + query);
             //throw err;
         } else {
             res.json(result);
+            console.log(result)
         }
     });
 });
@@ -48,16 +48,16 @@ function compilequery(query) {
 
     switch (query) {
         case 'instructor':
-            query = "SELECT fname,lname,mname,city,state,address,zip,phone, hourly, salary,wage,years_employed,is_managed_by, classes FROM person INNER JOIN employee ON person.personID=employee.personID INNER JOIN instructor ON instructor.employeeID=employee.employeeID;";
+            query = "SELECT  pe.fname as 'First Name', pe.mname as 'Middle Name', pe.lname as 'Last Name', pe.city, pe.state, pe.address, pe.zip, pe.phone, emp_e.hourly, emp_e.salary, emp_e.wage, emp_e.years_employed as 'Years Employed', inst.classes,CONCAT(pm.fname, ' ', pm.lname) as 'Manager Name' FROM person pe, person pm, employee emp_e, employee emp_m, instructor inst WHERE pe.personID=emp_e.personID AND pm.personID=emp_m.personID AND emp_e.employeeID=inst.employeeID AND emp_e.is_managed_by = emp_m.employeeID;";
             break;
         case 'dbadmin':
-            query = "SELECT fname,lname,mname,city,state,address,zip,phone,hourly, salary,wage,years_employed,is_managed_by FROM person INNER JOIN employee ON person.personID=employee.personID INNER JOIN dbadmin ON dbadmin.employeeID=employee.employeeID;";
+            query = "SELECT  pe.fname as 'First Name', pe.mname as 'Middle Name', pe.lname as 'Last Name', pe.city, pe.state, pe.address, pe.zip, pe.phone, emp_e.hourly, emp_e.salary, emp_e.wage, emp_e.years_employed as 'Years Employed', CONCAT(pm.fname, ' ', pm.lname) as 'Manager Name' FROM person pe, person pm, employee emp_e, employee emp_m, dbadmin db WHERE pe.personID=emp_e.personID AND pm.personID=emp_m.personID AND emp_e.employeeID=db.employeeID AND emp_e.is_managed_by = emp_m.employeeID;";
             break;
         case 'ski_patrol':
-            query = "SELECT fname,lname,mname,city,state,address,zip,phone,hourly, salary,wage,years_employed,is_managed_by, toboggan_trained, avalanche_trained, peakID FROM person INNER JOIN employee ON person.personID=employee.personID INNER JOIN ski_patrol ON ski_patrol.employeeID=employee.employeeID;";
+            query = "SELECT  pe.fname as 'First Name', pe.mname as 'Middle Name', pe.lname as 'Last Name', pe.city, pe.state, pe.address, pe.zip, pe.phone, emp_e.hourly, emp_e.salary, emp_e.wage, emp_e.years_employed as 'Years Employed', peak.name as 'Peak Stationed', CONCAT(pm.fname, ' ', pm.lname) as 'Manager Name' FROM person pe, person pm, employee emp_e, employee emp_m, ski_patrol sp, peak WHERE pe.personID=emp_e.personID AND pm.personID=emp_m.personID AND emp_e.employeeID=sp.employeeID AND emp_e.is_managed_by = emp_m.employeeID AND sp.peakID = peak.peakID;";
             break;
         case 'facilities':
-            query = "SELECT fname,lname,mname,city,state,address,zip,phone,hourly, salary,wage,years_employed,is_managed_by, trained FROM person INNER JOIN employee ON person.personID=employee.personID INNER JOIN facilities ON facilities.employeeID=employee.employeeID;";
+            query = "SELECT  pe.fname as 'First Name', pe.mname as 'Middle Name', pe.lname as 'Last Name', pe.city, pe.state, pe.address, pe.zip, pe.phone, emp_e.hourly, emp_e.salary, emp_e.wage, emp_e.years_employed as 'Years Employed', fac.trained,CONCAT(pm.fname, ' ', pm.lname) as 'Manager Name' FROM person pe, person pm, employee emp_e, employee emp_m, facilities fac WHERE pe.personID=emp_e.personID AND pm.personID=emp_m.personID AND emp_e.employeeID=fac.employeeID AND emp_e.is_managed_by = emp_m.employeeID;";
             break;
         case 'credential_card':
             query = "SELECT ID_number,fname,lname,mname, photo FROM person INNER JOIN employee ON person.personID=employee.personID INNER JOIN credential_card ON credential_card.employeeID=employee.employeeID";
@@ -98,16 +98,16 @@ router.get('/customSQL', function (req, res, next) {
     var query = req.query.q;
     console.log(query);
 
-
     db_con.query(query, function (err, result, fields) {
         if (err) {
             res.json(err);
             return;
         } else {
             res.json(result);
+            console.log(fields)
+            console.log(result);
         }
     });
-
 });
 
 

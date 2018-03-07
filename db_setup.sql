@@ -25,7 +25,6 @@ VALUES ( 'Jack', 'Nelley', 'J', 'SoJO', 'CA', '555 N 500 E', '7777', '111-321-92
 INSERT INTO person (fName,lName,mName,city,state,address,zip,phone)
 VALUES ( 'Joe', 'Punchclock', '', 'Coolsville', 'CO', '444 N 500 E', '22222', '111-321-3321');
 
-
 CREATE TABLE employee(
     employeeID int NOT NULL AUTO_INCREMENT,
     wage VARCHAR(255),
@@ -38,12 +37,20 @@ CREATE TABLE employee(
     FOREIGN KEY(personID) REFERENCES person(personID)
 );
 
+ALTER TABLE employee
+ADD FOREIGN KEY (is_managed_by) REFERENCES employee(employeeID);
+
+INSERT INTO employee (wage,years_employed,salary,hourly, personID)
+VALUES ( 30000, 2, 0, 1, 1);
 INSERT INTO employee (wage,years_employed,salary,hourly, is_managed_by, personID)
-VALUES ( 30000, 2, 0, 1, 1, 1);
+VALUES ( 80000, 5, 1, 0, 1, 2);
+
+UPDATE employee
+SET is_managed_by=2
+WHERE employeeID=1;
+
 INSERT INTO employee (wage,years_employed,salary,hourly, is_managed_by, personID)
-VALUES ( 80000, 5, 1, 0, 2, 1);
-INSERT INTO employee (wage,years_employed,salary,hourly, is_managed_by, personID)
-VALUES ( 180000, 15, 1, 0, 3, 1);
+VALUES ( 180000, 15, 1, 0, 1, 3);
 
 CREATE TABLE dbadmin(
     employeeID INT,
@@ -51,7 +58,7 @@ CREATE TABLE dbadmin(
 );
 
 INSERT INTO dbadmin ()
-VALUES (2);
+VALUES (3);
 
 CREATE TABLE instructor(
     classes VARCHAR(255),
@@ -206,23 +213,43 @@ SELECT fname,lname,mname,city,state,address,zip,phone, hourly, salary,wage,years
 FROM person
 INNER JOIN employee ON person.personID=employee.personID;
 
-#instructor
-SELECT fname,lname,mname,city,state,address,zip,phone, hourly, salary,wage,years_employed,is_managed_by, classes
-FROM person
-INNER JOIN employee ON person.personID=employee.personID
-INNER JOIN instructor ON instructor.employeeID=employee.employeeID;
+#dbadmin
+SELECT  pe.fname as 'First Name', pe.mname as "Middle Name", pe.lname as 'Last Name', pe.city, pe.state, pe.address, pe.zip, pe.phone, emp_e.hourly, emp_e.salary, emp_e.wage, emp_e.years_employed as 'Years Employed', CONCAT(pm.fname, " ", pm.lname) as 'Manager Name'
+FROM person pe, person pm, employee emp_e, employee emp_m, dbadmin db
+WHERE pe.personID=emp_e.personID
+AND pm.personID=emp_m.personID
+AND emp_e.employeeID=db.employeeID
+AND emp_e.is_managed_by = emp_m.employeeID;
 
-#ski_patrol updated in actual
-SELECT fname,lname,mname,city,state,address,zip,phone,hourly, salary,wage,years_employed,is_managed_by, peakID
-FROM person
-INNER JOIN employee ON person.personID=employee.personID
-INNER JOIN ski_patrol ON ski_patrol.employeeID=employee.employeeID;
+#instructor
+SELECT  pe.fname as 'First Name', pe.mname as 'Middle Name', pe.lname as 'Last Name', pe.city, pe.state, pe.address, pe.zip, pe.phone, emp_e.hourly, emp_e.salary, emp_e.wage, emp_e.years_employed as 'Years Employed', inst.classes,CONCAT(pm.fname, ' ', pm.lname) as 'Manager Name'
+FROM person pe, person pm, employee emp_e, employee emp_m, instructor inst
+WHERE pe.personID=emp_e.personID
+AND pm.personID=emp_m.personID
+AND emp_e.employeeID=inst.employeeID
+AND emp_e.is_managed_by = emp_m.employeeID;
+
+#ski_patrol
+SELECT  pe.fname as 'First Name', pe.mname as "Middle Name", pe.lname as 'Last Name', pe.city, pe.state, pe.address, pe.zip, pe.phone, emp_e.hourly, emp_e.salary, emp_e.wage, emp_e.years_employed as 'Years Employed', peak.name as 'Peak Stationed', CONCAT(pm.fname, " ", pm.lname) as 'Manager Name'
+FROM person pe, person pm, employee emp_e, employee emp_m, ski_patrol sp, peak
+WHERE pe.personID=emp_e.personID
+AND pm.personID=emp_m.personID
+AND emp_e.employeeID=sp.employeeID
+AND emp_e.is_managed_by = emp_m.employeeID
+AND sp.peakID = peak.peakID;
 
 #facilities
 SELECT fname,lname,mname,city,state,address,zip,phone,hourly, salary,wage,years_employed,is_managed_by, trained
 FROM person
 INNER JOIN employee ON person.personID=employee.personID
 INNER JOIN facilities ON facilities.employeeID=employee.employeeID;
+
+SELECT  pe.fname as 'First Name', pe.mname as 'Middle Name', pe.lname as 'Last Name', pe.city, pe.state, pe.address, pe.zip, pe.phone, emp_e.hourly, emp_e.salary, emp_e.wage, emp_e.years_employed as 'Years Employed', fac.trained,CONCAT(pm.fname, ' ', pm.lname) as 'Manager Name'
+FROM person pe, person pm, employee emp_e, employee emp_m, facilities fac
+WHERE pe.personID=emp_e.personID
+AND pm.personID=emp_m.personID
+AND emp_e.employeeID=fac.employeeID
+AND emp_e.is_managed_by = emp_m.employeeID;
 
 #credential_card
 SELECT ID_number, fname,lname,mname, photo
@@ -266,7 +293,6 @@ INNER JOIN lift
 ON lift.liftID=terrain_park.liftID;
 
 #mogul_track
-SELECT flags_placed, mogul_depth, liftid
+SELECT mogul_track.flags_placed, mogul_track.mogul_depth, lift.name
 FROM mogul_track
-INNER JOIN lift
-ON lift.liftID=mogul_track.liftID;
+INNER JOIN lift ON lift.liftID=mogul_track.liftID;
