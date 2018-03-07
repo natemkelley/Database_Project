@@ -24,9 +24,9 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/getResults', function (req, res, next) {
-    var databaseresults = "swag";
     var query = req.query.q.toLowerCase();
-    console.log(query);
+    compilequery(query);
+
 
     db_con.query("SELECT * FROM " + query, function (err, result, fields) {
         if (err) {
@@ -38,8 +38,37 @@ router.get('/getResults', function (req, res, next) {
     });
 });
 
+function compilequery(query) {
+    console.log(query);
+
+    switch (query) {
+        case 'dbadmin':
+            day = "Sunday";
+            break;
+        case 1:
+            day = "Monday";
+            break;
+        case 2:
+            day = "Tuesday";
+            break;
+        case 3:
+            day = "Wednesday";
+            break;
+        case 4:
+            day = "Thursday";
+            break;
+        case 5:
+            day = "Friday";
+            break;
+        case 6:
+            day = "Saturday";
+    }
+
+
+    return query;
+}
+
 router.get('/customSQL', function (req, res, next) {
-    var databaseresults = "swag";
     var query = req.query.q;
     console.log(query);
 
