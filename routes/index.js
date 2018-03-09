@@ -44,14 +44,10 @@ router.get('/getResults', function (req, res, next) {
 });
 
 router.post('/submitItem', function (req, res, next) {
-    var testing = [
-        {
-            "firstName": "John",
-            "lastName": "Doe"
-        }
-    ];
+    var receivedJSON = req.body.Sending;
 
-    res.send(testing);
+    console.log(receivedJSON)
+    res.json(receivedJSON);
 });
 
 function compilequery(query) {

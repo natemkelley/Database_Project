@@ -108,7 +108,6 @@ function displayResults(data, datID) {
 
 function structuredadd() {
     var whatSelect = $('#whattoadd').val();
-    console.log(whatSelect);
 
     switch (whatSelect) {
         case "personSelect":
@@ -143,7 +142,6 @@ function structuredadd() {
 function addPerson() {
     console.log('adding person');
     var whatTypePerson = $('#whatpersontoadd').val();
-    console.log(whatTypePerson);
 
     switch (whatTypePerson) {
         case "customerSelect":
@@ -160,14 +158,38 @@ function addPerson() {
 
 function addCustomer() {
     console.log('adding cust');
-
-    var testing = "swag";
-    $.post("submitItem", testing, function (data, status) {
-        console.log(data);
-        displayResults(data, 'showStatus');
-        $("#showStatus").fadeIn();
+    var jsonArray = [];
+    $("#datinputform :input").each(function () {
+        if ((this.value)) {
+            if ($(this).is(':visible')) {
+                var datID = $(this).attr('id');
+                jsonArray.push({
+                    [datID]: this.value
+                });
+            }
+        }
     });
 
+    console.log(jsonArray)
+
+    var sending = jsonArray;
+
+    $.ajax({
+        type: "POST",
+        url: "submitItem",
+        // The key needs to match your method's input parameter (case-sensitive).
+        data: JSON.stringify({
+            Sending: sending
+        }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+        },
+        failure: function (errMsg) {
+            alert(errMsg);
+        }
+    });
 }
 
 function addEmployee() {
