@@ -24,22 +24,12 @@ function customSQL() {
         $("#showCustomSQL").fadeIn();
     })
 
-    /*
-        $.post("/customSQL", {
-                name: "Donald Duck",
-                city: "Duckburg"
-            },
-            function (data, status) {
-                alert("Data: " + data + "\nStatus: " + status);
-            });
-    */
 }
 
 function clearResults() {
     $("#showData").hide();
     $("#showCustomSQL").hide();
     $('#customSQL').val('');
-
 }
 
 function changeHeader(command) {
@@ -113,29 +103,12 @@ function structuredadd() {
         case "personSelect":
             addPerson();
             break;
-        case "peakSelect":
-            addPeak();
-            break;
-        case "liftSelect":
-            addLift();
-            break;
-        case "creditcardSelect":
-            addCreditCard();
-            break;
-        case "daypassSelect":
-            addDayPass();
-            break;
-        case "runSelect":
-            addRun();
-            break;
-        case "terrainparkSelect":
-            addTerrainPark();
-            break;
-        case "mogulrunSelect":
-            addMogulRun();
+        case "-":
+            alert('Select Something!');
             break;
         default:
-            alert('Select Something!');
+            beforeSubmitToServer();
+            break;
     }
 }
 
@@ -145,19 +118,17 @@ function addPerson() {
 
     switch (whatTypePerson) {
         case "customerSelect":
-            addCustomer();
+            beforeSubmitToServer();
             break;
         case "employeeSelect":
-            addEmployee();
+            beforeSubmitToServer();
             break;
         default:
             alert('Select Something!');
-
     }
 }
 
-function addCustomer() {
-    console.log('adding cust');
+function beforeSubmitToServer() {
     var jsonArray = [];
     $("#datinputform :input").each(function () {
         if ((this.value)) {
@@ -171,15 +142,17 @@ function addCustomer() {
     });
 
     console.log(jsonArray)
+    submitToServer(jsonArray);
+}
 
-    var sending = jsonArray;
 
+
+function submitToServer(request) {
     $.ajax({
         type: "POST",
         url: "submitItem",
-        // The key needs to match your method's input parameter (case-sensitive).
         data: JSON.stringify({
-            Sending: sending
+            Sending: request
         }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -190,6 +163,51 @@ function addCustomer() {
             alert(errMsg);
         }
     });
+}
+
+$("#whattoadd").on("change", function () {
+    var value = $(this).val();
+    //console.log(value);
+    $('.level2').hide();
+    $('.level3').hide();
+    $('.level4').hide();
+
+    $("#" + value).fadeIn();
+})
+
+$("#whatpersontoadd").on("change", function () {
+    var value = $(this).val();
+    //console.log(value);
+    $('.level3').hide();
+    $("#" + value).fadeIn();
+})
+
+$("#typesofemp").on("change", function () {
+    var value = $(this).val();
+    //console.log(value);
+    $('.level4').hide();
+    $("#" + value).fadeIn();
+})
+
+
+/*
+function addCustomer() {
+    console.log('adding cust');
+
+    var jsonArray = [];
+    $("#datinputform :input").each(function () {
+        if ((this.value)) {
+            if ($(this).is(':visible')) {
+                var datID = $(this).attr('id');
+                jsonArray.push({
+                    [datID]: this.value
+                });
+            }
+        }
+    });
+
+    console.log(jsonArray)
+    submitToServer(jsonArray);
 }
 
 function addEmployee() {
@@ -223,27 +241,4 @@ function addTerrainPark() {
 function addMogulRun() {
     console.log('adding terrain Park');
 }
-
-$("#whattoadd").on("change", function () {
-    var value = $(this).val();
-    //console.log(value);
-    $('.level2').hide();
-    $('.level3').hide();
-    $('.level4').hide();
-
-    $("#" + value).fadeIn();
-})
-
-$("#whatpersontoadd").on("change", function () {
-    var value = $(this).val();
-    //console.log(value);
-    $('.level3').hide();
-    $("#" + value).fadeIn();
-})
-
-$("#typesofemp").on("change", function () {
-    var value = $(this).val();
-    //console.log(value);
-    $('.level4').hide();
-    $("#" + value).fadeIn();
-})
+*/
