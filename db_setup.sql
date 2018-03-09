@@ -25,6 +25,9 @@ VALUES ( 'Jack', 'Nelley', 'J', 'SoJO', 'CA', '555 N 500 E', '7777', '111-321-92
 INSERT INTO person (fName,lName,mName,city,state,address,zip,phone)
 VALUES ( 'Joe', 'Punchclock', '', 'Coolsville', 'CO', '444 N 500 E', '22222', '111-321-3321');
 
+
+
+
 CREATE TABLE employee(
     employeeID int NOT NULL AUTO_INCREMENT,
     wage VARCHAR(255),
@@ -288,3 +291,11 @@ WHERE lift.liftid=terrain_park.liftid;
 SELECT mogul_track.flags_placed, mogul_track.mogul_depth, lift.name as 'Lift Access'
 FROM mogul_track, lift
 where lift.liftid=mogul_track.liftid;
+
+
+#practice insterting person
+INSERT INTO person (fName,lName,mName,city,state,address,zip,phone)
+VALUES ( 'Joe', 'Johanison', 'Crabs', 'Mapleton', 'UT', '567 N 500 E', '84606', '385-321-9273');
+SET @last_insert_id = LAST_INSERT_ID();
+INSERT INTO employee (wage,years_employed,salary,hourly, personID)
+VALUES ( 30000, 2, 0, 1, @last_insert_id);
