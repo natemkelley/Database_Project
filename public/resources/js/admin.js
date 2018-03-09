@@ -91,10 +91,8 @@ function displayResults(data, datID) {
             var datValue = arrItems[i][col[j]];
             var id = datValue.toString();
             var lastfour = id.slice(-4); // => "Tabs1"
-            console.log(lastfour);
 
             if (lastfour === ('.gif' || '.jpg|' || '.png')) {
-                console.log(datValue);
                 arrItems[i][col[j]] = '<img src="' + id + '" alt="Mountain View">';
             }
 
@@ -162,6 +160,14 @@ function addPerson() {
 
 function addCustomer() {
     console.log('adding cust');
+
+    var testing = "swag";
+    $.post("submitItem", testing, function (data, status) {
+        console.log(data);
+        displayResults(data, 'showStatus');
+        $("#showStatus").fadeIn();
+    });
+
 }
 
 function addEmployee() {

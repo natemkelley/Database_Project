@@ -43,6 +43,17 @@ router.get('/getResults', function (req, res, next) {
     });
 });
 
+router.post('/submitItem', function (req, res, next) {
+    var testing = [
+        {
+            "firstName": "John",
+            "lastName": "Doe"
+        }
+    ];
+
+    res.send(testing);
+});
+
 function compilequery(query) {
     console.log(query);
 
@@ -109,7 +120,6 @@ router.get('/customSQL', function (req, res, next) {
         }
     });
 });
-
 
 router.get('/getcity', function (req, res, next) {
     fs.readFile(__dirname + '/cities.dat.txt', function (err, data) {
