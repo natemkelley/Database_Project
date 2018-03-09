@@ -87,6 +87,17 @@ function displayResults(data, datID) {
 
         for (var j = 0; j < col.length; j++) {
             var tabCell = tr.insertCell(-1);
+
+            var datValue = arrItems[i][col[j]];
+            var id = datValue.toString();
+            var lastfour = id.slice(-4); // => "Tabs1"
+            console.log(lastfour);
+
+            if (lastfour === ('.gif' || '.jpg|' || '.png')) {
+                console.log(datValue);
+                arrItems[i][col[j]] = '<img src="' + id + '" alt="Mountain View">';
+            }
+
             tabCell.innerHTML = arrItems[i][col[j]];
         }
     }
@@ -97,9 +108,97 @@ function displayResults(data, datID) {
     divContainer.appendChild(table);
 }
 
+function structuredadd() {
+    var whatSelect = $('#whattoadd').val();
+    console.log(whatSelect);
+
+    switch (whatSelect) {
+        case "personSelect":
+            addPerson();
+            break;
+        case "peakSelect":
+            addPeak();
+            break;
+        case "liftSelect":
+            addLift();
+            break;
+        case "creditcardSelect":
+            addCreditCard();
+            break;
+        case "daypassSelect":
+            addDayPass();
+            break;
+        case "runSelect":
+            addRun();
+            break;
+        case "terrainparkSelect":
+            addTerrainPark();
+            break;
+        case "mogulrunSelect":
+            addMogulRun();
+            break;
+        default:
+            alert('Select Something!');
+    }
+}
+
+function addPerson() {
+    console.log('adding person');
+    var whatTypePerson = $('#whatpersontoadd').val();
+    console.log(whatTypePerson);
+
+    switch (whatTypePerson) {
+        case "customerSelect":
+            addCustomer();
+            break;
+        case "employeeSelect":
+            addEmployee();
+            break;
+        default:
+            alert('Select Something!');
+
+    }
+}
+
+function addCustomer() {
+    console.log('adding cust');
+}
+
+function addEmployee() {
+    console.log('adding emp');
+}
+
+function addPeak() {
+    console.log('adding peak');
+}
+
+function addLift() {
+    console.log('adding lift');
+}
+
+function addDayPass() {
+    console.log('adding dp');
+}
+
+function addCreditCard() {
+    console.log('adding cc');
+}
+
+function addRun() {
+    console.log('adding run');
+}
+
+function addTerrainPark() {
+    console.log('adding terrain Park');
+}
+
+function addMogulRun() {
+    console.log('adding terrain Park');
+}
+
 $("#whattoadd").on("change", function () {
     var value = $(this).val();
-    console.log(value);
+    //console.log(value);
     $('.level2').hide();
     $('.level3').hide();
     $('.level4').hide();
@@ -109,14 +208,14 @@ $("#whattoadd").on("change", function () {
 
 $("#whatpersontoadd").on("change", function () {
     var value = $(this).val();
-    console.log(value);
+    //console.log(value);
     $('.level3').hide();
     $("#" + value).fadeIn();
 })
 
 $("#typesofemp").on("change", function () {
     var value = $(this).val();
-    console.log(value);
+    //console.log(value);
     $('.level4').hide();
     $("#" + value).fadeIn();
 })

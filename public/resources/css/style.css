@@ -45,3 +45,7 @@ tr:hover {
 .container {
     width: 95%;
 }
+
+img {
+    max-width: 220px;
+}
