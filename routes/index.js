@@ -16,10 +16,18 @@ var db_con = mysql.createConnection({
 db_con.connect();
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-    res.sendFile('admin.html', {
-        root: 'public'
-    });
+router.get('/admin', function (req, res, next) {
+    console.log(req.query.user);
+
+    if (req.query.user != "authenticated") {
+        res.sendFile('index2.html', {
+            root: 'public'
+        });
+    } else {
+        res.sendFile('admin.html', {
+            root: 'public'
+        });
+    }
 });
 
 router.get('/getResults', function (req, res, next) {
@@ -37,7 +45,6 @@ router.get('/getResults', function (req, res, next) {
             //throw err;
         } else {
             res.json(result);
-            console.log(result)
         }
     });
 });
@@ -50,7 +57,6 @@ router.get('/getEmployees', function (req, res, next) {
             //throw err;
         } else {
             res.json(result);
-            console.log(result)
         }
     });
 });
@@ -63,7 +69,6 @@ router.get('/getManagers', function (req, res, next) {
             //throw err;
         } else {
             res.json(result);
-            console.log(result)
         }
     });
 });
@@ -76,38 +81,30 @@ router.get('/getCustomers', function (req, res, next) {
             //throw err;
         } else {
             res.json(result);
-            console.log(result)
         }
     });
 });
-
 router.post('/submitItem', function (req, res, next) {
     var receivedJSON = req.body.Sending;
-    console.log(receivedJSON);
 
     switch (receivedJSON.whattoadd) {
         case "personSelect":
-            console.log('person...');
             addPerson(receivedJSON);
             res.json({
                 success: 200
             });
             break;
         case "-":
-            console.log('- this is not good');
             res.error('did not work son.');
             break;
         default:
-            console.log('default');
             addDefault(receivedJSON);
             res.json(receivedJSON);
             break;
     }
 });
-
 router.post('/updateManager', function (req, res, next) {
     var receivedJSON = req.body.Sending;
-    console.log(receivedJSON);
     var mantoemp = receivedJSON.mantoemp || 1;
     var emptoman = receivedJSON.emptoman || 1;
 
@@ -116,10 +113,8 @@ router.post('/updateManager', function (req, res, next) {
 
     db_con.query(dbquery, function (err, result, fields) {
         if (err) {
-            console.log(err);
             res.error(err);
         } else {
-            console.log(result);
             res.send({
                 success: "IT WORKED!"
             });
@@ -129,8 +124,6 @@ router.post('/updateManager', function (req, res, next) {
 })
 
 function addDefault(receivedJSON) {
-    console.log('ADD DEFAULT');
-    console.log(receivedJSON);
     switch (receivedJSON.whattoadd) {
         case "peakSelect":
             var peakName = receivedJSON.peakName || "-";
@@ -163,7 +156,6 @@ function addDefault(receivedJSON) {
             var length = receivedJSON.runLength || 0;
             var snowDepth = receivedJSON.snowDepth || 0;
             var difficulty = receivedJSON.difficulty || "-";
-            console.log(difficulty)
 
             var dbinsert = "INSERT INTO run (open_status, name,length, snow_depth, difficulty, liftID) VALUES (" + 0 + ", '" + runName + "'," + length + "," + snowDepth + ",'" + difficulty + "'," + 1 + ");";
 
@@ -181,7 +173,6 @@ function addDefault(receivedJSON) {
 
             break;
         default:
-            console.log('default');
             break;
     }
 
@@ -195,7 +186,6 @@ function addDefault(receivedJSON) {
 }
 
 function addPerson(receivedJSON) {
-    console.log('addperon')
     var fName = receivedJSON.fname || "-";
     var lName = receivedJSON.lname || "-";
     var mName = receivedJSON.mname || "-";
@@ -211,9 +201,7 @@ function addPerson(receivedJSON) {
         if (err) {
             console.log(err);
         } else {
-            console.log(result);
             var personID = result.insertId;
-            console.log(personID);
 
             switch (receivedJSON.whatpersontoadd) {
                 case "customerSelect":
@@ -223,7 +211,6 @@ function addPerson(receivedJSON) {
                     addEmployee(receivedJSON, personID);
                     break;
                 default:
-                    console.log('default');
                     break;
             }
         }
@@ -235,17 +222,14 @@ function addPerson(receivedJSON) {
 function addCustomer(receivedJSON, personID) {
     var newsletter = receivedJSON.newsletter || "0";
     var classes = receivedJSON.classes || "-";
-    console.log(classes);
 
     var dbinsert = "INSERT INTO customer (classes, news_letter,vertical_feet_skied,lifts_ridden,days_at_resort,personID) VALUES('" + classes + "', " + newsletter + ", " + 0 + ", " + 0 + ", " + 0 + ", " + personID + ")";
-    console.log(dbinsert);
 
     db_con.query(dbinsert, function (err, result, fields) {
         if (err) {
             console.log(err);
             return;
         } else {
-            console.log(result);
             GOODTOGO = true;
             return;
         }
@@ -273,7 +257,6 @@ function addEmployee(receivedJSON, personID) {
             console.log(err);
             return;
         } else {
-            console.log(result);
             var empID = result.insertId;
 
             switch (receivedJSON.typeofemp) {
@@ -285,7 +268,6 @@ function addEmployee(receivedJSON, personID) {
                     break;
                 case "instructorSelect":
                     var classes = receivedJSON.instructorclasses || "-";
-                    console.log(classes)
 
                     var dbinsert = "INSERT INTO instructor(classes,employeeID) VALUES ('" + classes + "'," + empID + ")";
                     break;
@@ -310,23 +292,9 @@ function addEmployee(receivedJSON, personID) {
         }
     });
 
-
-
-    /* var dbinsert = "INSERT INTO customer (classes, news_letter,vertical_feet_skied,lifts_ridden,days_at_resort,personID) VALUES('" + classes + "', " + newsletter + ", " + 0 + ", " + 0 + ", " + 0 + ", " + personID + ")";
-
-     db_con.query(dbinsert, function (err, result, fields) {
-         if (err) {
-             console.log(err);
-             return;
-         } else {
-             console.log(result);
-             return;
-         }
-     });*/
 }
 
 function compilequery(query) {
-    console.log(query);
 
     switch (query) {
         case 'instructor':
@@ -386,43 +354,9 @@ router.get('/customSQL', function (req, res, next) {
             return;
         } else {
             res.json(result);
-            console.log(fields)
-            console.log(result);
         }
     });
 });
-router.get('/getcity', function (req, res, next) {
-    fs.readFile(__dirname + '/cities.dat.txt', function (err, data) {
-        if (err) throw err;
-        var jsonresults = []
 
-        var cities = data.toString().split("\n");
-        console.log("the req is " + req.query.q);
-        var searchStr = req.query.q;
-        if (searchStr)
-            var myRe = new RegExp("^" + req.query.q)
-        else
-            var myRe = new RegExp("^")
-
-        for (var i = 0; i < cities.length; i++) {
-            var result = cities[i].search(myRe);
-            if (result != -1) {
-                //console.log(cities[i]);
-
-                jsonresults.push({
-                    city: cities[i]
-                })
-            }
-        }
-        res.status(200).json(jsonresults)
-    });
-});
-router.get('/getword', function (req, res, next) {
-    var userinput = req.query.q.toLowerCase();
-    var myWord = "https://owlbot.info/api/v1/dictionary/" + userinput;
-    console.log("In getword");
-    request(myWord).pipe(res);
-
-});
 
 module.exports = router;

@@ -11,7 +11,6 @@
 
     <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
     <script>
-        // Initialize Firebase
         var config = {
             apiKey: "AIzaSyC_l58MrjoLbVAycctuwrjSbTToFhdBRlc",
             authDomain: "it350-cc5f6.firebaseapp.com",
@@ -24,12 +23,14 @@
 
     </script>
 
+
+
     <script src="https://cdn.firebase.com/libs/firebaseui/2.6.2/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.6.2/firebaseui.css" />
     <script type="text/javascript">
         // FirebaseUI config.
         var uiConfig = {
-            signInSuccessUrl: 'admin.html',
+            signInSuccessUrl: 'admin?user=authenticated',
             signInOptions: [
                 // Leave the lines as is for the providers you want to offer your users.
                 firebase.auth.GoogleAuthProvider.PROVIDER_ID,
