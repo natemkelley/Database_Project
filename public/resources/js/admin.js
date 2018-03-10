@@ -79,8 +79,13 @@ function displayResults(data, datID) {
             var tabCell = tr.insertCell(-1);
 
             var datValue = arrItems[i][col[j]];
-            var id = datValue.toString();
-            var lastfour = id.slice(-4); // => "Tabs1"
+            if (datValue) {
+                var id = datValue.toString();
+                var lastfour = id.slice(-4); // => "Tabs1"
+            } else {
+                lastfour = "woozle";
+            }
+
 
             if (lastfour === ('.gif' || '.jpg|' || '.png')) {
                 arrItems[i][col[j]] = '<img src="' + id + '" alt="Mountain View">';
@@ -145,8 +150,6 @@ function beforeSubmitToServer() {
     submitToServer(jsonArray);
 }
 
-
-
 function submitToServer(request) {
     $.ajax({
         type: "POST",
@@ -158,6 +161,8 @@ function submitToServer(request) {
         dataType: "json",
         success: function (data) {
             console.log(data);
+            $('#showStatus').html('<h1 class="text-center"">swag</h1>')
+
         },
         failure: function (errMsg) {
             alert(errMsg);

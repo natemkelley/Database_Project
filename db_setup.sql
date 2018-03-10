@@ -295,7 +295,7 @@ where lift.liftid=mogul_track.liftid;
 
 #practice insterting person
 INSERT INTO person (fName,lName,mName,city,state,address,zip,phone)
-VALUES ( 'Joe', 'Johanison', 'Crabs', 'Mapleton', 'UT', '567 N 500 E', '84606', '385-321-9273');
+VALUES ( 'Joe', 'x', 'Crabs', 'Mapleton', 'UT', '567 N 500 E', '84606', '385-321-9273');
 SET @last_insert_id = LAST_INSERT_ID();
 INSERT INTO employee (wage,years_employed,salary,hourly, personID)
 VALUES ( 30000, 2, 0, 1, @last_insert_id);

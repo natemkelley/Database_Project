@@ -45,10 +45,88 @@ router.get('/getResults', function (req, res, next) {
 
 router.post('/submitItem', function (req, res, next) {
     var receivedJSON = req.body.Sending;
+    console.log(receivedJSON);
 
-    console.log(receivedJSON)
-    res.json(receivedJSON);
+    switch (receivedJSON.whattoadd) {
+        case "personSelect":
+            console.log('person...')
+            if (addPerson(receivedJSON)) {
+                console.log('200')
+                res.json(receivedJSON);
+            }
+            break;
+        case "-":
+            console.log('- this is not good');
+            res.error('did not work son.');
+            break;
+        default:
+            console.log('default');
+            res.json(receivedJSON);
+            break;
+    }
 });
+
+function addPerson(receivedJSON) {
+    console.log('addperon')
+    var fName = receivedJSON.fname || "-";
+    var lName = receivedJSON.lname || "-";
+    var mName = receivedJSON.mname || "-";
+    var city = receivedJSON.city || "-";
+    var state = receivedJSON.state || "-";
+    var phone = receivedJSON.phone || "-";
+    var address = receivedJSON.address || "-";
+    var zip = receivedJSON.zip || "-";
+
+    var dbinsert = "INSERT INTO person (fName,lName,mName,city,state,address,zip,phone) VALUES ( '" + fName + "', '" + lName + "', '" + mName + "', '" + city + "', '" + state + "', '" + address + "', '" + zip + "', '" + phone + "'); ";
+
+    db_con.query(dbinsert, function (err, result, fields) {
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            console.log(result);
+            var personID = result.insertId;
+            console.log(personID)
+
+            switch (receivedJSON.whatpersontoadd) {
+                case "customerSelect":
+                    addCustomer(receivedJSON, personID);
+                    break;
+                case "employeeSelect":
+                    addEmployee(receivedJSON, personID);
+                    break;
+                default:
+                    console.log('default');
+                    break;
+            }
+
+        }
+    });
+}
+
+function addCustomer(receivedJSON, personID) {
+    var newsletter = receivedJSON.newsletter;
+    var classes = receivedJSON.classes;
+    console.log(classes);
+
+    var dbinsert = "INSERT INTO customer (classes, news_letter,vertical_feet_skied,lifts_ridden,days_at_resort,personID) VALUES('" + classes + "', " + newsletter + ", " + 0 + ", " + 0 + ", " + 0 + ", " + personID + ")";
+    console.log(dbinsert);
+
+    db_con.query(dbinsert, function (err, result, fields) {
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            console.log(result);
+
+        }
+    });
+}
+
+function addEmployee(receivedJSON, personID) {
+
+}
+
 
 function compilequery(query) {
     console.log(query);
@@ -116,7 +194,6 @@ router.get('/customSQL', function (req, res, next) {
         }
     });
 });
-
 router.get('/getcity', function (req, res, next) {
     fs.readFile(__dirname + '/cities.dat.txt', function (err, data) {
         if (err) throw err;
