@@ -146,7 +146,7 @@ function beforeSubmitToServer() {
         }
     });
 
-    console.log(jsonArray)
+    console.log(jsonArray);
     submitToServer(jsonArray);
 }
 

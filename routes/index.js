@@ -49,11 +49,11 @@ router.post('/submitItem', function (req, res, next) {
 
     switch (receivedJSON.whattoadd) {
         case "personSelect":
-            console.log('person...')
-            if (addPerson(receivedJSON)) {
-                console.log('200')
-                res.json(receivedJSON);
-            }
+            console.log('person...');
+            GOODTOGO = false;
+            addPerson(receivedJSON);
+            res.json(receivedJSON);
+
             break;
         case "-":
             console.log('- this is not good');
@@ -82,11 +82,10 @@ function addPerson(receivedJSON) {
     db_con.query(dbinsert, function (err, result, fields) {
         if (err) {
             console.log(err);
-            return;
         } else {
             console.log(result);
             var personID = result.insertId;
-            console.log(personID)
+            console.log(personID);
 
             switch (receivedJSON.whatpersontoadd) {
                 case "customerSelect":
@@ -99,14 +98,15 @@ function addPerson(receivedJSON) {
                     console.log('default');
                     break;
             }
-
         }
     });
+
+    return true;
 }
 
 function addCustomer(receivedJSON, personID) {
-    var newsletter = receivedJSON.newsletter;
-    var classes = receivedJSON.classes;
+    var newsletter = receivedJSON.newsletter || "0";
+    var classes = receivedJSON.classes || "-";
     console.log(classes);
 
     var dbinsert = "INSERT INTO customer (classes, news_letter,vertical_feet_skied,lifts_ridden,days_at_resort,personID) VALUES('" + classes + "', " + newsletter + ", " + 0 + ", " + 0 + ", " + 0 + ", " + personID + ")";
@@ -118,13 +118,64 @@ function addCustomer(receivedJSON, personID) {
             return;
         } else {
             console.log(result);
-
+            GOODTOGO = true;
+            return;
         }
     });
 }
 
 function addEmployee(receivedJSON, personID) {
+    var wage = receivedJSON.wage;
+    var years_employed = receivedJSON.yearsemployed;
+    var is_managed_by = 1;
 
+    if (receivedJSON.paymentType == "Hourly") {
+        hourly = 1;
+        salary = 0;
+    } else {
+        hourly = 0;
+        salary = 1;
+    }
+
+    var dbinsert = "INSERT INTO employee (wage,years_employed,salary,hourly, is_managed_by, personID) VALUES('" + wage + "', " + years_employed + ", " + salary + ", " + hourly + ", '" + is_managed_by + "'," + personID + ")";
+
+
+    db_con.query(dbinsert, function (err, result, fields) {
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            console.log(result);
+            return;
+        }
+    });
+    switch (receivedJSON.typeofemp) {
+        case "dbadminSelect":
+            var dbinsert = "INSERT INTO customer (classes, news_letter,vertical_feet_skied,lifts_ridden,days_at_resort,personID) VALUES('" + classes + "', " + newsletter + ", " + 0 + ", " + 0 + ", " + 0 + ", " + personID + ")";
+            break;
+        case "skipatrolSelect":
+            break;
+        case "instructorSelect":
+            break;
+        case "facilitiesSelect":
+            break;
+        default:
+            console.log('default');
+            break;
+    }
+
+
+    /* var dbinsert = "INSERT INTO customer (classes, news_letter,vertical_feet_skied,lifts_ridden,days_at_resort,personID) VALUES('" + classes + "', " + newsletter + ", " + 0 + ", " + 0 + ", " + 0 + ", " + personID + ")";
+
+     db_con.query(dbinsert, function (err, result, fields) {
+         if (err) {
+             console.log(err);
+             return;
+         } else {
+             console.log(result);
+             return;
+         }
+     });*/
 }
 
 
