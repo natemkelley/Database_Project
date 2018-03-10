@@ -125,9 +125,9 @@ function addCustomer(receivedJSON, personID) {
 }
 
 function addEmployee(receivedJSON, personID) {
-    var wage = receivedJSON.wage;
-    var years_employed = receivedJSON.yearsemployed;
-    var is_managed_by = 1;
+    var wage = receivedJSON.wage || 0;
+    var years_employed = receivedJSON.yearsemployed || 0;
+    var is_managed_by = 1 || 0;
 
     if (receivedJSON.paymentType == "Hourly") {
         hourly = 1;
@@ -146,23 +146,42 @@ function addEmployee(receivedJSON, personID) {
             return;
         } else {
             console.log(result);
+            var empID = result.insertId;
+
+            switch (receivedJSON.typeofemp) {
+                case "dbadminSelect":
+                    var dbinsert = "INSERT INTO dbadmin VALUES (" + empID + ")";
+                    break;
+                case "skipatrolSelect":
+                    var dbinsert = "INSERT INTO ski_patrol(toboggan_trained,avalanche_trained, employeeID,peakID) VALUES (" + receivedJSON.togogganTrained + "," + receivedJSON.avalancheTrained + "," + empID + "," + 1 + ")";
+                    break;
+                case "instructorSelect":
+                    var classes = receivedJSON.instructorclasses || "-";
+                    console.log(classes)
+
+                    var dbinsert = "INSERT INTO instructor(classes,employeeID) VALUES ('" + classes + "'," + empID + ")";
+                    break;
+                case "facilitiesSelect":
+                    var dbinsert = "INSERT INTO facilities(trained,employeeID) VALUES (" + receivedJSON.facilitiesTrained + "," + empID + ")";
+                    break;
+                default:
+                    console.log('default');
+                    break;
+            }
+
+            db_con.query(dbinsert, function (err, result, fields) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log(result)
+                }
+            });
+
+
             return;
         }
     });
-    switch (receivedJSON.typeofemp) {
-        case "dbadminSelect":
-            var dbinsert = "INSERT INTO customer (classes, news_letter,vertical_feet_skied,lifts_ridden,days_at_resort,personID) VALUES('" + classes + "', " + newsletter + ", " + 0 + ", " + 0 + ", " + 0 + ", " + personID + ")";
-            break;
-        case "skipatrolSelect":
-            break;
-        case "instructorSelect":
-            break;
-        case "facilitiesSelect":
-            break;
-        default:
-            console.log('default');
-            break;
-    }
+
 
 
     /* var dbinsert = "INSERT INTO customer (classes, news_letter,vertical_feet_skied,lifts_ridden,days_at_resort,personID) VALUES('" + classes + "', " + newsletter + ", " + 0 + ", " + 0 + ", " + 0 + ", " + personID + ")";

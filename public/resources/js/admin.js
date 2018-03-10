@@ -187,10 +187,11 @@ $("#whatpersontoadd").on("change", function () {
     $("#" + value).fadeIn();
 })
 
-$("#typesofemp").on("change", function () {
+$("#typeofemp").on("change", function () {
     var value = $(this).val();
     //console.log(value);
     $('.level4').hide();
+    console.log(value)
     $("#" + value).fadeIn();
 })
 
