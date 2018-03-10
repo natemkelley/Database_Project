@@ -166,6 +166,7 @@ function beforeSubmitToServer() {
                     jsonArray[datID] = empID;
                     return;
                 }
+
                 jsonArray[datID] = this.value;
             }
         }
@@ -184,6 +185,39 @@ function beforeSubmitToServer() {
 }
 
 function updateManagers() {
+    if (($('#managing').val() == "-") || $('#managee').val() == "-") {
+        alert('Select an Employee');
+        return;
+    }
+
+
+    var managingID = getEmployeeID($('#managing').val());
+    var manageeID = getEmployeeID($('#managee').val());
+
+    var updateStuff = {
+        mantoemp: managingID,
+        emptoman: manageeID
+    };
+
+
+
+    $.ajax({
+        type: "POST",
+        url: "updateManager",
+        data: JSON.stringify({
+            Sending: updateStuff
+        }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            $('#showUpdateStatus').html("<h1 class='text-center'>" + data.success + "</h1")
+
+        },
+        failure: function (errMsg) {
+            alert(errMsg);
+        }
+    });
 
 }
 
@@ -208,6 +242,18 @@ function getCustomerID(data) {
     })
     console.log(customerID);
     return customerID;
+}
+
+function getEmployeeID(data) {
+    var employeeID = 1;
+    console.log(data);
+    $.each(THE_EMPLOYEES, function (index, value) {
+        if ((value.empName) == data) {
+            employeeID = value.employeeID;
+        }
+    })
+    console.log(employeeID);
+    return employeeID;
 }
 
 function submitToServer(request) {

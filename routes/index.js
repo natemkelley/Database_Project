@@ -42,7 +42,7 @@ router.get('/getResults', function (req, res, next) {
     });
 });
 router.get('/getEmployees', function (req, res, next) {
-    var query = "SELECT employee.employeeID, CONCAT(person.fName,' ',person.lName) FROM employee, person WHERE person.personID = employee.personID;";
+    var query = "SELECT employee.employeeID, CONCAT(person.fName,' ',person.lName) as empName FROM employee, person WHERE person.personID = employee.personID;";
 
     db_con.query(query, function (err, result, fields) {
         if (err) {
@@ -104,6 +104,29 @@ router.post('/submitItem', function (req, res, next) {
             break;
     }
 });
+
+router.post('/updateManager', function (req, res, next) {
+    var receivedJSON = req.body.Sending;
+    console.log(receivedJSON);
+    var mantoemp = receivedJSON.mantoemp || 1;
+    var emptoman = receivedJSON.emptoman || 1;
+
+
+    var dbquery = "UPDATE employee SET is_managed_by = " + mantoemp + " WHERE employeeID = " + emptoman + ";";
+
+    db_con.query(dbquery, function (err, result, fields) {
+        if (err) {
+            console.log(err);
+            res.error(err);
+        } else {
+            console.log(result);
+            res.send({
+                success: "IT WORKED!"
+            });
+        }
+    });
+
+})
 
 function addDefault(receivedJSON) {
     console.log('ADD DEFAULT');
