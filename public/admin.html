@@ -33,6 +33,7 @@
                         <option>ski_patrol</option>
                         <option>Facilities</option>
                         <option>Credential_Card</option>
+                        <option>Credit_Card_Info</option>
                         <option>Customer</option>
                         <option>Day_Pass</option>
                         <option>Peak</option>
@@ -231,7 +232,7 @@
                 </div>
                 <div class="form-group">
                     <label>Elevation:</label>
-                    <input type="text" class="form-control" id="elevation">
+                    <input type="number" class="form-control" id="elevation">
                 </div>
             </div>
 
@@ -247,6 +248,12 @@
             </div>
 
             <div id="creditcardSelect" class="level2" style="display:none">
+                <div class="form-group">
+                    <p>Customer</p>
+                    <select class="form-control" id="customerlist">
+                        <option value="-">-</option>
+                    </select>
+                </div>
                 <div class="form-group">
                     <label>Credit Card Number:</label>
                     <input type="text" class="form-control" id="ccnumber">
@@ -288,7 +295,7 @@
                 </div>
                 <div class="form-group">
                     <label>Difficulty:</label>
-                    <select class="form-control" id="thecustomers">
+                    <select class="form-control" id="difficulty">
                         <option value="Green Cirlce">Green Circle</option>
                         <option value="Blue Square">Blue Square</option>
                         <option value="Black Diamond">Black Diamond</option>
@@ -309,16 +316,18 @@
 
             <div id="mogulrunSelect" class="level2" style="display:none">
                 <div class="form-group">
-                    <label>Name:</label>
-                    <input type="text" class="form-control" id="mogulRunName">
-                </div>
-                <div class="form-group">
                     <label>Flags Placed:</label>
-                    <input type="text" class="form-control" id="flagsPlaced">
+                    <select class="form-control" id="flagsplaced">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select> </div>
+                <div class="form-group">
+                    <label>Mogul Depth:</label>
+                    <input type="text" class="form-control" id="mogulDepth">
                 </div>
                 <div class="form-group">
-                    <label>Mogul Depht:</label>
-                    <input type="text" class="form-control" id="mogulDepth">
+                    <label>Name:</label>
+                    <input type="text" class="form-control" id="mogulName">
                 </div>
             </div>
 

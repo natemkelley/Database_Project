@@ -15,7 +15,6 @@ var db_con = mysql.createConnection({
 
 db_con.connect();
 
-
 /* GET home page. */
 router.get('/', function (req, res, next) {
     res.sendFile('admin.html', {
@@ -42,6 +41,19 @@ router.get('/getResults', function (req, res, next) {
         }
     });
 });
+router.get('/getManagers', function (req, res, next) {
+    var query = "SELECT E1.personID FROM employee as E1, employee as E2 WHERE E1.employeeID = E2.is_managed_by;";
+
+    db_con.query(query, function (err, result, fields) {
+        if (err) {
+            response.status(400).send('Error in database operation' + query);
+            //throw err;
+        } else {
+            res.json(result);
+            console.log(result)
+        }
+    });
+});
 
 router.post('/submitItem', function (req, res, next) {
     var receivedJSON = req.body.Sending;
@@ -50,10 +62,10 @@ router.post('/submitItem', function (req, res, next) {
     switch (receivedJSON.whattoadd) {
         case "personSelect":
             console.log('person...');
-            GOODTOGO = false;
             addPerson(receivedJSON);
-            res.json(receivedJSON);
-
+            res.json({
+                success: 200
+            });
             break;
         case "-":
             console.log('- this is not good');
@@ -61,10 +73,74 @@ router.post('/submitItem', function (req, res, next) {
             break;
         default:
             console.log('default');
+            addDefault(receivedJSON);
             res.json(receivedJSON);
             break;
     }
 });
+
+function addDefault(receivedJSON) {
+    console.log('ADD DEFAULT');
+    console.log(receivedJSON);
+    switch (receivedJSON.whattoadd) {
+        case "peakSelect":
+            var peakName = receivedJSON.peakName || "-";
+            var elevation = receivedJSON.elevation || 0;
+            var elevationINT = parseInt(elevation);
+            var dbinsert = "INSERT INTO peak (elevation, name) VALUES (" + elevationINT + ",'" + peakName + "');"
+            break;
+        case "liftSelect":
+            var liftName = receivedJSON.liftName || "-";
+            var verticalFeet = receivedJSON.verticalFeet || 0;
+
+            var dbinsert = "INSERT INTO lift (open_status, name,vertical_feet,peakID) VALUES (" + 0 + ",'" + liftName + "'," + verticalFeet + "," + 1 + ");"
+
+            break;
+        case "creditcardSelect":
+            var ccnumber = receivedJSON.ccnumber || 42424242424242;
+            var dbinsert = "INSERT INTO credit_card_info (card_number, verified, customerID) VALUES ('" + ccnumber + "'," + 0 + "," + 2 + ");"
+
+            break;
+        case "daypassSelect":
+            the_date = receivedJSON.date || "-";
+            var dbinsert = "INSERT INTO day_pass (the_date, customerID) VALUES ('" + the_date + "'," + 1 + ");";
+
+            break;
+        case "runSelect":
+            var runName = receivedJSON.runName || "-";
+            var length = receivedJSON.runLength || 0;
+            var snowDepth = receivedJSON.snowDepth || 0;
+            var difficulty = receivedJSON.difficulty || "-";
+            console.log(difficulty)
+
+            var dbinsert = "INSERT INTO run (open_status, name,length, snow_depth, difficulty, liftID) VALUES (" + 0 + ", '" + runName + "'," + length + "," + snowDepth + ",'" + difficulty + "'," + 1 + ");";
+
+            break;
+        case "terrainparkSelect":
+            var name = receivedJSON.terrainparkName || "-";
+            var features = receivedJSON.features || "-";
+            var dbinsert = "INSERT INTO terrain_park  (name,features,open_status,liftID) VALUES ('" + name + "'," + features + "," + 0 + "," + 1 + ");";
+            break;
+        case "mogulrunSelect":
+            var flagsplaced = receivedJSON.flagsplaced || 0;
+            var name = receivedJSON.mogulName || "-";
+            var mogulDepth = receivedJSON.mogulDepth || 0;
+            var dbinsert = "INSERT INTO mogul_track  (name, flags_placed,mogul_depth,liftID) VALUES ('" + name + "'," + flagsplaced + "," + mogulDepth + "," + 1 + ");";
+
+            break;
+        default:
+            console.log('default');
+            break;
+    }
+
+    db_con.query(dbinsert, function (err, result, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(result);
+        }
+    });
+}
 
 function addPerson(receivedJSON) {
     console.log('addperon')
@@ -197,7 +273,6 @@ function addEmployee(receivedJSON, personID) {
      });*/
 }
 
-
 function compilequery(query) {
     console.log(query);
 
@@ -239,7 +314,7 @@ function compilequery(query) {
             query = "SELECT terrain_park.name, terrain_park.features, terrain_park.open_status, lift.name as 'Lift Access' FROM terrain_park, lift WHERE lift.liftid=terrain_park.liftid;"
             break;
         case 'mogul_track':
-            query = "SELECT mogul_track.flags_placed, mogul_track.mogul_depth, lift.name as 'Lift Access' FROM mogul_track, lift where lift.liftid=mogul_track.liftid;"
+            query = "SELECT mogul_track.name,mogul_track.flags_placed, mogul_track.mogul_depth, lift.name as 'Lift Access' FROM mogul_track, lift where lift.liftid=mogul_track.liftid;"
             break;
         default:
             query = false;

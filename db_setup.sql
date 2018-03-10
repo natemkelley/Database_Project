@@ -155,8 +155,6 @@ CREATE TABLE day_pass(
     FOREIGN KEY(customerID) REFERENCES customer(customerID)
 );
 
-INSERT INTO day_pass (the_date, customerID)
-VALUES ('Thurs March 12, 2018', 1);
 
 CREATE TABLE lift(
     liftID  int NOT NULL AUTO_INCREMENT,
@@ -202,14 +200,15 @@ INSERT INTO terrain_park  (name,features,open_status,liftID)
 VALUES ('Rerun',"1 Big Jump, 3 small kickers, 2 box rails",1,2);
 
 CREATE TABLE mogul_track(
+    name varchar(255),
     flags_placed INT(1),
     mogul_depth INT(50),
     liftID INT,
     FOREIGN KEY(liftID) REFERENCES lift(liftID)
 );
 
-INSERT INTO mogul_track  (flags_placed,mogul_depth,liftID)
-VALUES (1,3,1);
+INSERT INTO mogul_track  (name,flags_placed,mogul_depth,liftID)
+VALUES ("Big ONE",1,3,1);
 
 #employee
 SELECT fname,lname,mname,city,state,address,zip,phone, hourly, salary,wage,years_employed,is_managed_by
@@ -291,6 +290,9 @@ WHERE lift.liftid=terrain_park.liftid;
 SELECT mogul_track.flags_placed, mogul_track.mogul_depth, lift.name as 'Lift Access'
 FROM mogul_track, lift
 where lift.liftid=mogul_track.liftid;
+
+#mmanager
+SELECT DISTINCT E1.personID, CONCAT(person.fName,' ',person.lName) AS "MANAGER NAME" FROM employee E1, employee E2, person WHERE E1.employeeID = E2.is_managed_by AND E1.personID = person.personID;
 
 
 #practice insterting person

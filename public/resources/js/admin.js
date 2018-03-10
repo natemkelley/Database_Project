@@ -195,6 +195,16 @@ $("#typeofemp").on("change", function () {
     $("#" + value).fadeIn();
 })
 
+$(document).ready(function () {
+    var EXISTING_EMPS = [];
+    var MANGERS = [];
+
+    $.getJSON('getManagers', function (data) {
+        console.log(data);
+    });
+
+});
+
 
 /*
 function addCustomer() {
