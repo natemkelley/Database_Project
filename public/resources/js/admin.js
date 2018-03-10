@@ -1,3 +1,6 @@
+var THE_MANAGERS = [];
+var THE_CUSTOMERS = [];
+
 function getSelect() {
     var command = $('#getTable').val();
     var myurl = "/getResults?q=" + command;
@@ -135,19 +138,71 @@ function addPerson() {
 
 function beforeSubmitToServer() {
     var jsonArray = {};
-
     var prepper = "";
+    var emptyFields = false;
+
     $("#datinputform :input").each(function () {
+        if (this.value.length < 1) {
+            emptyFields = true;
+        }
+
         if ((this.value)) {
             if ($(this).is(':visible')) {
                 var datID = $(this).attr('id');
+
+
+                if (datID == "themanagers") {
+                    console.log(this.value);
+                    var empID = getManagerEmpID(this.value);
+                    console.log(empID);
+                    jsonArray[datID] = empID;
+                    return;
+                }
+                if ((datID == "customerlist") || (datID == "thecustomers")) {
+                    console.log(this.value);
+                    var empID = getCustomerID(this.value);
+                    console.log(empID);
+                    jsonArray[datID] = empID;
+                    return;
+                }
                 jsonArray[datID] = this.value;
             }
         }
     });
 
     console.log(jsonArray);
+
+    if (emptyFields) {
+        if (confirm("Looks like you have empty fields. Sure you want to submit?")) {} else {
+            alert("Crisis Averted");
+            return;
+        }
+    }
+
     submitToServer(jsonArray);
+}
+
+function getManagerEmpID(data) {
+    var employeeID = 1;
+    $.each(THE_MANAGERS, function (index, value) {
+        if (value.mname == data) {
+            employeeID = value.employeeID;
+        }
+    })
+    console.log(employeeID);
+    return employeeID;
+}
+
+function getCustomerID(data) {
+    console.log('WORKING!!!!')
+    var customerID = 1;
+    $.each(THE_CUSTOMERS, function (index, value) {
+        if ((value.custName) == data) {
+            customerID = value.customerID;
+        }
+    })
+    console.log(customerID);
+    return customerID;
 }
 
 function submitToServer(request) {
@@ -161,7 +216,7 @@ function submitToServer(request) {
         dataType: "json",
         success: function (data) {
             console.log(data);
-            $('#showStatus').html('<h1 class="text-center"">swag</h1>')
+            $('#showStatus').html('<h1 class="text-center showstatus"">SEEMS TO HAVE WORKED</h1>')
 
         },
         failure: function (errMsg) {
@@ -196,65 +251,24 @@ $("#typeofemp").on("change", function () {
 })
 
 $(document).ready(function () {
-    var EXISTING_EMPS = [];
-    var MANGERS = [];
-
     $.getJSON('getManagers', function (data) {
         console.log(data);
+        $.each(data, function (index, value) {
+            THE_MANAGERS.push(data[index]);
+            console.log(data[index].mname);
+            $('#themanagers').append("<option>" + data[index].mname + "</option>");
+        });
+    });
+    $.getJSON('getCustomers', function (data) {
+        console.log(data);
+        $.each(data, function (index, value) {
+            var createName = data[index].custName;
+
+            console.log(value);
+            THE_CUSTOMERS.push(data[index]);
+            $('#thecustomers').append("<option>" + createName + "</option>");
+            $('#customerlist').append("<option>" + createName + "</option>");
+        });
     });
 
 });
-
-
-/*
-function addCustomer() {
-    console.log('adding cust');
-
-    var jsonArray = [];
-    $("#datinputform :input").each(function () {
-        if ((this.value)) {
-            if ($(this).is(':visible')) {
-                var datID = $(this).attr('id');
-                jsonArray.push({
-                    [datID]: this.value
-                });
-            }
-        }
-    });
-
-    console.log(jsonArray)
-    submitToServer(jsonArray);
-}
-
-function addEmployee() {
-    console.log('adding emp');
-}
-
-function addPeak() {
-    console.log('adding peak');
-}
-
-function addLift() {
-    console.log('adding lift');
-}
-
-function addDayPass() {
-    console.log('adding dp');
-}
-
-function addCreditCard() {
-    console.log('adding cc');
-}
-
-function addRun() {
-    console.log('adding run');
-}
-
-function addTerrainPark() {
-    console.log('adding terrain Park');
-}
-
-function addMogulRun() {
-    console.log('adding terrain Park');
-}
-*/

@@ -292,8 +292,9 @@ FROM mogul_track, lift
 where lift.liftid=mogul_track.liftid;
 
 #mmanager
-SELECT DISTINCT E1.personID, CONCAT(person.fName,' ',person.lName) AS "MANAGER NAME" FROM employee E1, employee E2, person WHERE E1.employeeID = E2.is_managed_by AND E1.personID = person.personID;
+SELECT DISTINCT E1.personID, CONCAT(person.fName,' ',person.lName), E1.employeeID FROM employee E1, employee E2, person WHERE E1.employeeID = E2.is_managed_by AND E1.personID = person.personID;
 
+SELECT customer.customerID, person.personID, CONCAT(person.fName,' ',person.lName) AS custName FROM customer,person WHERE customer.personID = person.personID;
 
 #practice insterting person
 INSERT INTO person (fName,lName,mName,city,state,address,zip,phone)

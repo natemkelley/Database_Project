@@ -4,7 +4,7 @@
 
 .showstuff {
     padding: 35px;
-    background-color: rgb(195, 166, 225);
+    background-color: rgb(200, 232, 189);
 }
 
 .showstuff h2 {
@@ -38,7 +38,7 @@ tr:hover {
 }
 
 .structuredAdd {
-    background-color: #ffeb7f;
+    background-color: rgba(253, 223, 155, 0.82);
     padding: 30px 10px;
 }
 
@@ -48,4 +48,13 @@ tr:hover {
 
 img {
     max-width: 220px;
+}
+
+.adminheader h1 {
+    font-size: 75px;
+    margin-bottom: 25px;
+}
+
+.showstatus {
+    color: #99ea1e;
 }

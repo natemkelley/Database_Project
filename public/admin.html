@@ -13,7 +13,7 @@
 
 
 <body>
-    <div class="container">
+    <div class="container adminheader">
         <div class="row">
             <div class="col-md-12 text-center">
                 <h1>Admin Panel</h1>
@@ -54,24 +54,6 @@
         </div>
     </div>
 
-    <div class="container customSQL">
-        <h2 class="text-center">Custom SQL Query</h2>
-        <div class="col-md-8 col-md-offset-2 getresults">
-            <div class="form-horizontal">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="customSQL">
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-default btn-admin" onclick="customSQL()">Submit</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12 display results">
-            <h3 class="text-center" id="resultsHeader">Results</h3>
-            <div id="showCustomSQL"></div>
-        </div>
-    </div>
-
     <div class="container structuredAdd" id='datinputform'>
         <h2 class="text-center">Structured Add</h2>
         <div class="col-md-8 col-md-offset-2 getresults">
@@ -95,11 +77,11 @@
             <div id="personSelect" class="level2" style="display:none">
                 <div class="form-group">
                     <label>First Name:</label>
-                    <input type="text" class="form-control" id="fname">
+                    <input required type="text" class="form-control" id="fname">
                 </div>
                 <div class="form-group">
                     <label>Last Name:</label>
-                    <input type="text" class="form-control" id="lname">
+                    <input required type="text" class="form-control" id="lname">
                 </div>
                 <div class="form-group">
                     <label>Middle Name:</label>
@@ -165,7 +147,7 @@
                 </div>
                 <div class="form-group">
                     <label>Years Employed:</label>
-                    <input type="number" class="form-control" id="yearsemployed">
+                    <input required type="number" class="form-control" id="yearsemployed">
                 </div>
                 <div class="form-group">
                     <label>Manager:</label>
@@ -182,7 +164,7 @@
                 </div>
                 <div class="form-group">
                     <label>credential card photo url:</label>
-                    <input type="text" class="form-control" id="credentialphoto">
+                    <input required type="text" class="form-control" id="credentialphoto">
                 </div>
             </div>
 
@@ -228,7 +210,7 @@
             <div id="peakSelect" class="level2" style="display:none">
                 <div class="form-group">
                     <label>Peak Name:</label>
-                    <input type="text" class="form-control" id="peakName">
+                    <input required type="text" class="form-control" id="peakName">
                 </div>
                 <div class="form-group">
                     <label>Elevation:</label>
@@ -239,7 +221,7 @@
             <div id="liftSelect" class="level2" style="display:none">
                 <div class="form-group">
                     <label>Lift Name:</label>
-                    <input type="text" class="form-control" id="liftName">
+                    <input required type="text" class="form-control" id="liftName">
                 </div>
                 <div class="form-group">
                     <label>Vertical Feet:</label>
@@ -251,12 +233,11 @@
                 <div class="form-group">
                     <p>Customer</p>
                     <select class="form-control" id="customerlist">
-                        <option value="-">-</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Credit Card Number:</label>
-                    <input type="text" class="form-control" id="ccnumber">
+                    <input required type="text" class="form-control" id="ccnumber">
                 </div>
                 <div class="form-group">
                     <p>Card Verified?</p>
@@ -270,12 +251,11 @@
             <div id="daypassSelect" class="level2" style="display:none">
                 <div class="form-group">
                     <label>Date:</label>
-                    <input type="date" class="form-control" id="date">
+                    <input required type="date" class="form-control" id="date">
                 </div>
                 <div class="form-group">
                     <label>Customer:</label>
                     <select class="form-control" id="thecustomers">
-                        <option value="-">-</option>
                     </select>
                 </div>
             </div>
@@ -283,7 +263,7 @@
             <div id="runSelect" class="level2" style="display:none">
                 <div class="form-group">
                     <label>Run Name:</label>
-                    <input type="text" class="form-control" id="runName">
+                    <input required type="text" class="form-control" id="runName">
                 </div>
                 <div class="form-group">
                     <label>Length:</label>
@@ -306,7 +286,7 @@
             <div id="terrainparkSelect" class="level2" style="display:none">
                 <div class="form-group">
                     <label>Name:</label>
-                    <input type="text" class="form-control" id="terrainParkName">
+                    <input required type="text" class="form-control" id="terrainParkName">
                 </div>
                 <div class="form-group">
                     <label>Features:</label>
@@ -327,7 +307,7 @@
                 </div>
                 <div class="form-group">
                     <label>Name:</label>
-                    <input type="text" class="form-control" id="mogulName">
+                    <input required type="text" class="form-control" id="mogulName">
                 </div>
             </div>
 

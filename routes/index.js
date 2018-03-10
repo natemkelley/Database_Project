@@ -42,7 +42,20 @@ router.get('/getResults', function (req, res, next) {
     });
 });
 router.get('/getManagers', function (req, res, next) {
-    var query = "SELECT E1.personID FROM employee as E1, employee as E2 WHERE E1.employeeID = E2.is_managed_by;";
+    var query = "SELECT DISTINCT E1.personID, CONCAT(person.fName,' ',person.lName) AS 'mname', E1.employeeID FROM employee E1, employee E2, person WHERE E1.employeeID = E2.is_managed_by AND E1.personID = person.personID;";
+
+    db_con.query(query, function (err, result, fields) {
+        if (err) {
+            response.status(400).send('Error in database operation' + query);
+            //throw err;
+        } else {
+            res.json(result);
+            console.log(result)
+        }
+    });
+});
+router.get('/getCustomers', function (req, res, next) {
+    var query = "SELECT customer.customerID, person.personID, CONCAT(person.fName,' ',person.lName) AS custName FROM customer,person WHERE customer.personID = person.personID;";
 
     db_con.query(query, function (err, result, fields) {
         if (err) {
@@ -98,12 +111,15 @@ function addDefault(receivedJSON) {
             break;
         case "creditcardSelect":
             var ccnumber = receivedJSON.ccnumber || 42424242424242;
-            var dbinsert = "INSERT INTO credit_card_info (card_number, verified, customerID) VALUES ('" + ccnumber + "'," + 0 + "," + 2 + ");"
+            var customerID = receivedJSON.customerlist || 1;
+            var dbinsert = "INSERT INTO credit_card_info (card_number, verified, customerID) VALUES ('" + ccnumber + "'," + 0 + "," + customerID + ");"
 
             break;
         case "daypassSelect":
             the_date = receivedJSON.date || "-";
-            var dbinsert = "INSERT INTO day_pass (the_date, customerID) VALUES ('" + the_date + "'," + 1 + ");";
+            var customerID = receivedJSON.thecustomers || 1;
+
+            var dbinsert = "INSERT INTO day_pass (the_date, customerID) VALUES ('" + the_date + "'," + customerID + ");";
 
             break;
         case "runSelect":
@@ -203,7 +219,7 @@ function addCustomer(receivedJSON, personID) {
 function addEmployee(receivedJSON, personID) {
     var wage = receivedJSON.wage || 0;
     var years_employed = receivedJSON.yearsemployed || 0;
-    var is_managed_by = 1 || 0;
+    var is_managed_by = receivedJSON.themanagers || 1;
 
     if (receivedJSON.paymentType == "Hourly") {
         hourly = 1;
