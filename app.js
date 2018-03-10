@@ -6,6 +6,18 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
+/*
+var firebase = require('firebase');
+var firebaseui = require('firebaseui');
+var config = {
+    apiKey: "AIzaSyC_l58MrjoLbVAycctuwrjSbTToFhdBRlc",
+    authDomain: "it350-cc5f6.firebaseapp.com",
+    databaseURL: "https://it350-cc5f6.firebaseio.com",
+    storageBucket: "it350-cc5f6.appspot.com"
+};
+firebase.initializeApp(config);
+*/
+
 
 var app = express();
 
