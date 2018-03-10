@@ -147,7 +147,7 @@
             <div id="employeeSelect" class="level3" style="display:none">
                 <div class="form-group">
                     <label>Typer of Employee:</label>
-                    <select class="form-control" id="typesofemp">
+                    <select class="form-control" id="typeofemp">
                         <option value="dbadminSelect">dbadmin</option>
                         <option value="skipatrolSelect">Ski Patrol</option>
                         <option value="instructorSelect">Instructor</option>
@@ -156,11 +156,11 @@
                 </div>
                 <div class="form-group">
                     <label>Wage:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="wage">
                 </div>
                 <div class="form-group">
                     <label>Years Employed:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="yearsemployed">
                 </div>
                 <div class="form-group">
                     <label>Manager:</label>
@@ -177,21 +177,21 @@
                 </div>
                 <div class="form-group">
                     <label>credential card photo url:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="credentialphoto">
                 </div>
             </div>
 
             <div id="instructorSelect" class="level4" style="display:none">
                 <div class="form-group">
                     <label>Classes:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="instructorclasses">
                 </div>
             </div>
 
             <div id="facilitiesSelect" class="level4" style="display:none">
                 <div class="form-group">
                     <p>Trained:</p>
-                    <select class="form-control" id="cardverified">
+                    <select class="form-control" id="facilitiesTrained">
                         <option value="0">No</option>
                         <option value="1">Yes</option>
                     </select> </div>
@@ -206,16 +206,14 @@
                 </div>
                 <div class="form-group">
                     <p>Toboggan Trained?</p>
-                    <label class="radio-inline">
-                        <input type="radio" name="optradio">No
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="optradio">Yes
-                    </label>
+                    <select class="form-control" id="thepeaks">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <p>Avalanche Trained?</p>
-                    <select class="form-control" id="cardverified">
+                    <select class="form-control" id="avalancheTrained">
                         <option value="0">No</option>
                         <option value="1">Yes</option>
                     </select>
@@ -225,29 +223,29 @@
             <div id="peakSelect" class="level2" style="display:none">
                 <div class="form-group">
                     <label>Peak Name:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="peakName">
                 </div>
                 <div class="form-group">
                     <label>Elevation:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="elevation">
                 </div>
             </div>
 
             <div id="liftSelect" class="level2" style="display:none">
                 <div class="form-group">
                     <label>Lift Name:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="liftName">
                 </div>
                 <div class="form-group">
                     <label>Vertical Feet:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="verticalFeet">
                 </div>
             </div>
 
             <div id="creditcardSelect" class="level2" style="display:none">
                 <div class="form-group">
                     <label>Credit Card Number:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="ccnumber">
                 </div>
                 <div class="form-group">
                     <p>Card Verified?</p>
@@ -261,11 +259,10 @@
             <div id="daypassSelect" class="level2" style="display:none">
                 <div class="form-group">
                     <label>Date:</label>
-                    <input type="date" class="form-control">
+                    <input type="date" class="form-control" id="date">
                 </div>
                 <div class="form-group">
                     <label>Customer:</label>
-                    <label>Peak:</label>
                     <select class="form-control" id="thecustomers">
                         <option value="-">-</option>
                     </select>
@@ -275,15 +272,15 @@
             <div id="runSelect" class="level2" style="display:none">
                 <div class="form-group">
                     <label>Run Name:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="runName">
                 </div>
                 <div class="form-group">
                     <label>Length:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="runLength">
                 </div>
                 <div class="form-group">
                     <label>Snow Depth:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="snowDepth">
                 </div>
                 <div class="form-group">
                     <label>Difficulty:</label>
@@ -298,26 +295,26 @@
             <div id="terrainparkSelect" class="level2" style="display:none">
                 <div class="form-group">
                     <label>Name:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="terrainParkName">
                 </div>
                 <div class="form-group">
                     <label>Features:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="features">
                 </div>
             </div>
 
             <div id="mogulrunSelect" class="level2" style="display:none">
                 <div class="form-group">
                     <label>Name:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="mogulRunName">
                 </div>
                 <div class="form-group">
                     <label>Flags Placed:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="flagsPlaced">
                 </div>
                 <div class="form-group">
                     <label>Mogul Depht:</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="mogulDepth">
                 </div>
             </div>
 

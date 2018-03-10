@@ -129,14 +129,14 @@ function addPerson() {
 }
 
 function beforeSubmitToServer() {
-    var jsonArray = [];
+    var jsonArray = {};
+
+    var prepper = "";
     $("#datinputform :input").each(function () {
         if ((this.value)) {
             if ($(this).is(':visible')) {
                 var datID = $(this).attr('id');
-                jsonArray.push({
-                    [datID]: this.value
-                });
+                jsonArray[datID] = this.value;
             }
         }
     });
