@@ -321,6 +321,35 @@
         </div>
     </div>
 
+
+    <div class="container updatestuff">
+        <h2 class="text-center">Update Managers</h2>
+        <div class="col-md-8 col-md-offset-2 getresults">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="getTable">Select Which Employee Is To Manage:</label>
+                    <select class="form-control" id="managing">
+                        <option>-</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="getTable">Select Employee That Is Being Managed:</label>
+                    <select class="form-control" id="managee">
+                        <option>-</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default btn-admin" onclick="updateManagers()">Submit</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12 display results">
+                <h3 class="text-center">Status</h3>
+                <div id="showUpdateStatus"></div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <link rel="stylesheet" href="resources/css/style.css">

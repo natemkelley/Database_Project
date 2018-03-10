@@ -41,6 +41,19 @@ router.get('/getResults', function (req, res, next) {
         }
     });
 });
+router.get('/getEmployees', function (req, res, next) {
+    var query = "SELECT employee.employeeID, CONCAT(person.fName,' ',person.lName) FROM employee, person WHERE person.personID = employee.personID;";
+
+    db_con.query(query, function (err, result, fields) {
+        if (err) {
+            response.status(400).send('Error in database operation' + query);
+            //throw err;
+        } else {
+            res.json(result);
+            console.log(result)
+        }
+    });
+});
 router.get('/getManagers', function (req, res, next) {
     var query = "SELECT DISTINCT E1.personID, CONCAT(person.fName,' ',person.lName) AS 'mname', E1.employeeID FROM employee E1, employee E2, person WHERE E1.employeeID = E2.is_managed_by AND E1.personID = person.personID;";
 

@@ -1,5 +1,6 @@
 var THE_MANAGERS = [];
 var THE_CUSTOMERS = [];
+var THE_EMPLOYEES = [];
 
 function getSelect() {
     var command = $('#getTable').val();
@@ -182,6 +183,10 @@ function beforeSubmitToServer() {
     submitToServer(jsonArray);
 }
 
+function updateManagers() {
+
+}
+
 function getManagerEmpID(data) {
     var employeeID = 1;
     $.each(THE_MANAGERS, function (index, value) {
@@ -270,5 +275,18 @@ $(document).ready(function () {
             $('#customerlist').append("<option>" + createName + "</option>");
         });
     });
+    $.getJSON('getEmployees', function (data) {
+        console.log(data);
+        $.each(data, function (index, value) {
+            var createName = data[index].empName;
+
+            console.log(value);
+            THE_EMPLOYEES.push(data[index]);
+            $('#managing').append("<option>" + createName + "</option>");
+            $('#managee').append("<option>" + createName + "</option>");
+        });
+    });
+
+
 
 });

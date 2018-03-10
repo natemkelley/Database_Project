@@ -296,6 +296,8 @@ SELECT DISTINCT E1.personID, CONCAT(person.fName,' ',person.lName), E1.employeeI
 
 SELECT customer.customerID, person.personID, CONCAT(person.fName,' ',person.lName) AS custName FROM customer,person WHERE customer.personID = person.personID;
 
+SELECT employee.employeeID, CONCAT(person.fName,' ',person.lName) FROM employee, person WHERE person.personID = employee.personID;
+
 #practice insterting person
 INSERT INTO person (fName,lName,mName,city,state,address,zip,phone)
 VALUES ( 'Joe', 'x', 'Crabs', 'Mapleton', 'UT', '567 N 500 E', '84606', '385-321-9273');
