@@ -3,18 +3,37 @@ console.log('loading pos');
 
 
 function submitCust() {
-    alert('pressed');
+    //alert('pressed');
 
-    var name = $("#fname").val();
+    var fname = $("#fname").val();
+    var lname = $("#lname").val();
+    var mname = $("#mname").val();
     var email = $("#email").val();
-    // Returns successful data submission message when the entered information is stored in database.
+    var address = $("#address").val();
+    var city = $("#city").val();
+    var state = $("#state").val();
+    var state = $("#zip").val();
+    var state = $("#phone").val();
+    var classes = $("#classes").val();
+    var newsletter = $("#newsletter").val();
+
+    var dataString = "";
+
+    $('.customerPanel input').each(function () {
+        if (dataString.length < 2) {
+            console.log(this.value);
+            console.log(this.id);
+            dataString = this.id + '=' + this.value;
+        } else {
+            dataString = dataString + "&" + this.id + '=' + this.value;
+        }
+    });
 
 
-
-    var dataString = 'fname=' + name + '&email1=' + email;
+    console.log(dataString);
 
     if (false) {
-        alert("Please Fill All Fields");
+        //alert("Please Fill All Fields");
     } else {
         // AJAX Code To Submit Form.
         $.ajax({
@@ -23,22 +42,24 @@ function submitCust() {
             data: dataString,
             cache: false,
             success: function (result) {
-                alert(result);
+                displaySuccess(result)
+            },
+            error: function (jqXHR, execption) {
+                ajaxError(jqXHR, execption)
             }
         });
     }
 };
 
 
-function submitCustomer() {
+function displaySuccess(data) {
+    //var jsonParse = JSON.parse(data);
+    console.log(data);
+    //console.log(jsonParse);
 
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("txtHint").innerHTML = this.responseText;
-        }
-    }
-    xmlhttp.open("GET", "newCustomer.php?" + str, true);
-    xmlhttp.send();
+}
 
+function ajaxError(jqXHR, execption) {
+    console.warn(jqXHR);
+    console.warn(jqXHR.responseText);
 }
