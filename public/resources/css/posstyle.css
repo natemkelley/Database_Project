@@ -1,0 +1,17 @@
+body {
+    background-color: rgba(38, 181, 26, 0.03);
+}
+
+.customerPanel {
+    padding: 25px;
+    border: 1px solid grey
+}
+
+h2 {
+    background: rgb(72, 162, 93);
+    color: white;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}

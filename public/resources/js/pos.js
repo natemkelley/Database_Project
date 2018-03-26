@@ -56,12 +56,10 @@ function submitCust() {
 function submitCard() {
     var ccnumber = $("#ccnumber").val();
     var verified = $("#cardverified").val();
-    var custNum = getCustomerID($("#customerlist").val());
 
 
     var dataString = "ccnumber=" + ccnumber + "&"
-    dataString = dataString + "verified=" + verified + "&";
-    dataString = dataString + "customerID=" + custNum;
+    dataString = dataString + "verified=" + verified;
 
 
     console.log(dataString);
@@ -77,9 +75,12 @@ function submitCard() {
             cache: false,
             success: function (result) {
                 displaySuccess(result);
+                return false;
             },
             error: function (jqXHR, execption) {
                 ajaxError(jqXHR, execption);
+                return false;
+
             }
         });
     }
@@ -87,6 +88,7 @@ function submitCard() {
 
 function displaySuccess(data) {
     //var jsonParse = JSON.parse(data);
+    alert("YAY!");
     if (data == 1) {
         alert("IT WORKED");
     }
