@@ -40,6 +40,7 @@
             <div class="col-md-12 text-center">
                 <h1>POS Panel</h1>
                 <h3>Welcome to the Ski Resort</h3>
+                <h4><a>This panel is intended to be used by cashiers of the resort</a></h4>
             </div>
         </div>
     </div>
