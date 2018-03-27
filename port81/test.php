@@ -138,7 +138,7 @@
             <h2 class="text-center" data-toggle="collapse" data-target="#daypassPanel">Add Day Pass</h2>
         </div>
         <div class="collapse" id="daypassPanel">
-            <form class="daypassPanel col-md-10 col-md-offset-1">
+            <div class="daypassPanel col-md-10 col-md-offset-1">
                 <div class="form-group">
                     <label>Date:</label>
                     <input required type="date" class="form-control" id="date">
@@ -148,7 +148,9 @@
                     <select class="form-control" id="thecustomers">
                     </select>
                 </div>
-            </form>
+                <div type="submit" class="btn btn-default btn-admin" onclick="submitPass()">Submit</div>
+
+            </div>
         </div>
     </div>
 
@@ -158,5 +160,6 @@
 
 <script src="resources/js/pos.js"></script>
 <script src="resources/js/getcust.js"></script>
+<script src="resources/js/daypass.js"></script>
 
 </html>

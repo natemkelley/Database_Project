@@ -1,11 +1,11 @@
 <?php 
 
 $err = "";
-$name = $email = "";
+$custID = $date = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if(!ctype_digit ($_POST["ccnumber"])){
-        $err = "Needs to be a number";
+    if(!($_POST["customerID"])){
+        $err = "Needs to be a customer";
     }
 }
 
@@ -17,12 +17,10 @@ if (strlen($err) > 2){
     $mysqli = new mysqli('localhost','root','Chegagg1o','it350');
     
 
-    $ccnumber = $_POST["ccnumber"];
-    $verified = $_POST["verified"];
+    $date = $_POST["date"];
     $customerID = $_POST["customerID"];
 
-    
-    $dbinsert2 = "INSERT INTO credit_card_info (card_number, verified, customerID) VALUES($ccnumber,$verified, $customerID)";
+    $dbinsert2 = "INSERT INTO day_pass (the_date, customerID) VALUES('$date', $customerID)";
     $newquery = $mysqli->query($dbinsert2);
 
     
