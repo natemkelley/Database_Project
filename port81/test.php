@@ -15,9 +15,41 @@
             messagingSenderId: "237078450393"
         };
         firebase.initializeApp(config);
+
+    </script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/2.6.2/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.6.2/firebaseui.css" />
+    <script type="text/javascript">
+        // FirebaseUI config.
+        var uiConfig = {
+            signInSuccessUrl: 'test.php',
+            signInOptions: [
+                // Leave the lines as is for the providers you want to offer your users.
+                firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            ],
+            // Terms of service url.
+            tosUrl: '<your-tos-url>'
+        };
+        // Initialize the FirebaseUI Widget using Firebase.
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+        // The start method will wait until the DOM is loaded.
+        ui.start('#firebaseui-auth-container', uiConfig);
+
+
         firebase.auth().onAuthStateChanged(function(user) {
-            console.log(user);
-            $('body').fadeIn();
+            if (user.displayName) {
+                //console.log(user);
+                console.log(user);
+                alert("Hello " + user.displayName);
+                getNOSQL();
+                $('#nosql').fadeIn();
+                $('#firebaseui-auth-container').fadeOut();
+
+
+            } else {
+                console.log('false positive');
+            }
+
         });
 
     </script>
@@ -34,7 +66,7 @@
 </head>
 
 
-<body>
+<body style="display:">
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
@@ -155,6 +187,42 @@
         </div>
     </div>
 
+    <div class="container">
+        <div class="row">
+            <h2 class="text-center" data-toggle="collapse" data-target="#nosqlpanel">NoSQL Panel</h2>
+        </div>
+        <div class="collapse" id="nosqlpanel">
+            <div class="daypassPanel col-md-10 col-md-offset-1">
+                <div class="col-md-12">
+                    <h4 class="text-center" id="swaptext">Log in to see the nosql database dump</h4>
+                </div>
+                <div id="firebaseui-auth-container">
+
+                </div>
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input required type="text" class="form-control" id="nosqlname">
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input required type="text" class="form-control" id="nosqlemail">
+                    </div>
+                    <div class="form-group">
+                        <label>User Image:</label>
+                        <input required type="text" class="form-control" id="nosqluserimg">
+                    </div>
+                    <div type="submit" class="btn btn-default btn-admin" onclick="submitNOSQL()">Submit</div>
+                </div>
+                <div id="nosql" style="display:none">
+                    <p>this field will populate if there is data</p>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
 
 </body>
 
@@ -162,5 +230,6 @@
 <script src="resources/js/pos.js"></script>
 <script src="resources/js/getcust.js"></script>
 <script src="resources/js/daypass.js"></script>
+<script src="resources/js/nosql.js"></script>
 
 </html>
