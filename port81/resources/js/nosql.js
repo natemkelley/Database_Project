@@ -4,7 +4,8 @@ var database = firebase.database();
 function logUserData(user) {
     var email = user.email;
     var displayName = user.displayName;
-
+    var creatiionTime = user.metadata.creationTime;
+    var lastSignInTime = user.metadata.lastSignInTime;
 
 
     var uid = user.uid;
@@ -12,13 +13,15 @@ function logUserData(user) {
 
     firebase.database().ref('log_users/' + uid).set({
         email: email,
-        displayName: displayName
+        displayName: displayName,
+        creationTime: creatiionTime,
+        lastSignInTime: lastSignInTime
     });
 }
 
 
 function getNOSQL() {
-    firebase.database().ref('users/').once('value').then(function (snapshot) {
+    firebase.database().ref('complaints/').once('value').then(function (snapshot) {
         console.log(snapshot.val());
         var snap = snapshot.val();
         var myJSON = JSON.stringify(snap);
@@ -34,7 +37,7 @@ function submitNOSQL() {
 
     var d = new Date().getTime();
 
-    firebase.database().ref('users/' + d).set({
+    firebase.database().ref('complaints/' + d).set({
         username: name,
         email: email,
         profile_picture: imageUrl

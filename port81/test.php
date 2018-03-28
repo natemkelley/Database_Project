@@ -172,7 +172,7 @@
 
     <div class="container">
         <div class="row">
-            <h2 class="text-center" data-toggle="collapse" data-target="#nosqlpanel">NoSQL Panel</h2>
+            <h2 class="text-center" data-toggle="collapse" data-target="#nosqlpanel">NoSQL Panel (Complaints)</h2>
         </div>
         <div class="collapse" id="nosqlpanel">
             <div class="daypassPanel col-md-10 col-md-offset-1">
@@ -182,7 +182,7 @@
                 <div id="firebaseui-auth-container">
 
                 </div>
-                <div class="col-md-10 col-md-offset-1" id="enterDatanosql">
+                <div class="col-md-10 col-md-offset-1" id="enterDatanosql" style="display:none">
                     <div class="form-group">
                         <label>Name:</label>
                         <input required type="text" class="form-control" id="nosqlname" placeholder="Jack Daneils">
@@ -192,8 +192,8 @@
                         <input required type="text" class="form-control" id="nosqlemail" placeholder="none@none.com">
                     </div>
                     <div class="form-group">
-                        <label>User Image:</label>
-                        <input required type="text" class="form-control" id="nosqluserimg" placeholder="http://static.adweek.com/adweek.com-prod/wp-content/uploads/2017/09/skeletor-geico-hed-2017.jpg">
+                        <label>Complaint:</label>
+                        <input required type="text" class="form-control" id="nosqluserimg" placeholder="No toilet paper in the bathrooms">
                     </div>
                     <div type="submit" class="btn btn-default btn-admin" onclick="submitNOSQL()">Submit</div>
                 </div>
