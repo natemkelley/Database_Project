@@ -35,24 +35,6 @@
         // The start method will wait until the DOM is loaded.
         ui.start('#firebaseui-auth-container', uiConfig);
 
-
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user.displayName) {
-                //console.log(user);
-                console.log(user);
-                alert("Hello " + user.displayName);
-                getNOSQL();
-                $('#nosql').fadeIn();
-                $('#firebaseui-auth-container').fadeOut();
-                $('#swap-text').fadeOut();
-
-
-            } else {
-                console.log('false positive');
-            }
-
-        });
-
     </script>
 
 
@@ -200,7 +182,7 @@
                 <div id="firebaseui-auth-container">
 
                 </div>
-                <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-10 col-md-offset-1" id="enterDatanosql">
                     <div class="form-group">
                         <label>Name:</label>
                         <input required type="text" class="form-control" id="nosqlname" placeholder="Jack Daneils">
@@ -232,5 +214,24 @@
 <script src="resources/js/getcust.js"></script>
 <script src="resources/js/daypass.js"></script>
 <script src="resources/js/nosql.js"></script>
+<script>
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user.displayName) {
+            //console.log(user);
+            logUserData(user);
+            alert("Hello " + user.displayName);
+            getNOSQL();
+            $('#nosql').fadeIn();
+            $('#enterDatanosql').fadeIn();
+            $('#firebaseui-auth-container').fadeOut();
+            $('#swap-text').fadeOut();
+
+        } else {
+            console.log('false positive');
+        }
+
+    });
+
+</script>
 
 </html>

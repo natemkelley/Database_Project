@@ -1,15 +1,18 @@
 var database = firebase.database();
 
 
+function logUserData(user) {
+    var email = user.email;
+    var displayName = user.displayName;
 
-function writeUserData(name, email, imageUrl) {
-    var d = new Date().getTime();
 
 
-    firebase.database().ref('users/' + d).set({
-        username: name,
+    var uid = user.uid;
+    console.log(user);
+
+    firebase.database().ref('log_users/' + uid).set({
         email: email,
-        profile_picture: imageUrl
+        displayName: displayName
     });
 }
 
