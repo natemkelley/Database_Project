@@ -44,6 +44,7 @@
                 getNOSQL();
                 $('#nosql').fadeIn();
                 $('#firebaseui-auth-container').fadeOut();
+                $('#swap-text').fadeOut();
 
 
             } else {
@@ -194,7 +195,7 @@
         <div class="collapse" id="nosqlpanel">
             <div class="daypassPanel col-md-10 col-md-offset-1">
                 <div class="col-md-12">
-                    <h4 class="text-center" id="swaptext">Log in to see the nosql database dump</h4>
+                    <h3 class="text-center" id="swap-text" style="color:red">Log in to see the nosql database dump</h3>
                 </div>
                 <div id="firebaseui-auth-container">
 
@@ -202,19 +203,19 @@
                 <div class="col-md-10 col-md-offset-1">
                     <div class="form-group">
                         <label>Name:</label>
-                        <input required type="text" class="form-control" id="nosqlname">
+                        <input required type="text" class="form-control" id="nosqlname" placeholder="Jack Daneils">
                     </div>
                     <div class="form-group">
                         <label>Email:</label>
-                        <input required type="text" class="form-control" id="nosqlemail">
+                        <input required type="text" class="form-control" id="nosqlemail" placeholder="none@none.com">
                     </div>
                     <div class="form-group">
                         <label>User Image:</label>
-                        <input required type="text" class="form-control" id="nosqluserimg">
+                        <input required type="text" class="form-control" id="nosqluserimg" placeholder="http://static.adweek.com/adweek.com-prod/wp-content/uploads/2017/09/skeletor-geico-hed-2017.jpg">
                     </div>
                     <div type="submit" class="btn btn-default btn-admin" onclick="submitNOSQL()">Submit</div>
                 </div>
-                <div id="nosql" style="display:none">
+                <div class="col-md-12" id="nosql" style="display:none; margin-top:60px;">
                     <p>this field will populate if there is data</p>
                 </div>
 
