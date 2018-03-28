@@ -317,7 +317,21 @@ select @sum;
 CREATE TRIGGER daypassTotal BEFORE INSERT ON day_pass FOR EACH ROW SET @sum = @sum + 150;
 SET @sum = 150;
 select @sum;
-INSERT INTO day_pass (the_date, customerID) VALUES ("March 1, 2018",1);
+INSERT INTO day_pass (the_date, customerID) VALUES ("March 1, 2018git",1);
 select @sum;
+
+DELIMITER $$
+CREATE PROCEDURE emailByCity
+AS
+SELECT *
+FROM Person.email
+WHERE city = @city
+END$$
+DELIMITER ;
+
+
+EXEC emailByCity @City = 'Provo'
+
+   
 
 
