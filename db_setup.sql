@@ -304,3 +304,20 @@ VALUES ( 'Joe', 'x', 'Crabs', 'Mapleton', 'UT', '567 N 500 E', '84606', '385-321
 SET @last_insert_id = LAST_INSERT_ID();
 INSERT INTO employee (wage,years_employed,salary,hourly, personID)
 VALUES ( 30000, 2, 0, 1, @last_insert_id);
+
+CREATE VIEW quickPass AS
+SELECT fname as 'First Name', mname as 'Middle Name', lname as 'Last Name', the_date as 'The Date'
+FROM person
+INNER JOIN customer ON person.personID=customer.personID
+INNER JOIN day_pass ON customer.customerID=day_pass.customerID;
+
+
+SET @sum = 0;
+select @sum;
+CREATE TRIGGER daypassTotal BEFORE INSERT ON day_pass FOR EACH ROW SET @sum = @sum + 150;
+SET @sum = 150;
+select @sum;
+INSERT INTO day_pass (the_date, customerID) VALUES ("March 1, 2018",1);
+select @sum;
+
+

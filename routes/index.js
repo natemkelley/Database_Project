@@ -319,7 +319,7 @@ function compilequery(query) {
             query = "SELECT fname as 'First Name', mname as'Middle Name', lname as'Last Name', card_number as'Card Number', verified FROM person INNER JOIN customer ON person.personID=customer.personID INNER JOIN credit_card_info ON customer.customerID=credit_card_info.customerID;";
             break;
         case 'day_pass':
-            query = "SELECT fname as 'First Name', mname as 'Middle Name', lname as 'Last Name', the_date as 'The Date' FROM person INNER JOIN customer ON person.personID=customer.personID INNER JOIN day_pass ON customer.customerID=day_pass.customerID;";
+            query = "SELECT * from quickPass;";
             break;
         case 'lift':
             query = "SELECT lift.name, lift.vertical_feet,lift.open_status, peak.name as 'Peak' FROM lift, peak WHERE lift.peakid=peak.peakid;"
