@@ -3,16 +3,16 @@ var router = express.Router();
 var request = require('request')
 var fs = require('fs');
 const https = require('https');
+
 //IT350 Specific
 var mysql = require('mysql');
-
+var PythonShell = require('python-shell');
 var db_con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "Chegagg1o",
     database: "it350"
 });
-
 db_con.connect();
 
 /* GET home page. */
@@ -29,7 +29,6 @@ router.get('/admin', function (req, res, next) {
         });
     }
 });
-
 router.get('/getResults', function (req, res, next) {
     var query = req.query.q.toLowerCase();
     if (compilequery(query)) {
@@ -120,8 +119,18 @@ router.post('/updateManager', function (req, res, next) {
             });
         }
     });
-
 })
+router.get('/mysqlStatus', function (req, res, next) {
+    console.log('mysqlStatus');
+    if (fs.existsSync('./routes/python/mysqlStatus.py')) {
+
+        PythonShell.run('./routes/python/mysqlStatus.py', function (err, results) {
+            var sendback = JSON.parse(results)
+            res.status(sendback.status).json(sendback);
+        });
+    }
+})
+
 
 function addDefault(receivedJSON) {
     switch (receivedJSON.whattoadd) {

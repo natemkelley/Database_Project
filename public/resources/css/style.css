@@ -76,4 +76,5 @@ img {
     color: #fff;
     background-color: #5cb85c!important;
     border-color: #4cae4c;
+    transition: 1.0s;
 }

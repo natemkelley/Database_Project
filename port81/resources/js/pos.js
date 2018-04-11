@@ -52,8 +52,6 @@ function submitCust() {
     }
 };
 
-
-
 function displaySuccess(data) {
     //var jsonParse = JSON.parse(data);
     if (data == 1) {
