@@ -41,7 +41,8 @@ function MySqlStatus() {
             $('.btn-mysql').addClass('btn-success').fadeIn();
         },
         error: function (jqXHR, execption) {
-            console.error(execption);
+            alert(jqXHR.responseText);
+            $('.btn-mysql').addClass('btn-danger').fadeIn();
         }
     });
 }
