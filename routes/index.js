@@ -124,8 +124,13 @@ router.post('/updateManager', function (req, res, next) {
 router.get('/mysqlStatus', function (req, res, next) {
     console.log('mysqlStatus');
     PythonShell.run('./routes/python/mysqlStatus.py', function (err, results) {
+        if (err) {
+            res.status(418).send('something really bad');
+            return
+        }
+
         var sendback = JSON.parse(results)
-        res.status(sendback.status).send(sendback.error);
+        res.status(sendback.status).send(sendback.msg);
     });
 })
 router.get('/elasticsearchStatus', function (req, res, next) {
