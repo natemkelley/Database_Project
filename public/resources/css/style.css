@@ -63,3 +63,17 @@ img {
     background-color: #e68f8f;
     padding: 50px 0px
 }
+
+.dbstatus .btn {
+    width: 31.5%;
+}
+
+.dbstatus .btn:hover {
+    cursor: default;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #5cb85c!important;
+    border-color: #4cae4c;
+}

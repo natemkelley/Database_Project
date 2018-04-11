@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+    <script>
+        var config = {
+            apiKey: "AIzaSyC_l58MrjoLbVAycctuwrjSbTToFhdBRlc",
+            authDomain: "it350-cc5f6.firebaseapp.com",
+            databaseURL: "https://it350-cc5f6.firebaseio.com",
+            projectId: "it350-cc5f6",
+            storageBucket: "it350-cc5f6.appspot.com",
+            messagingSenderId: "237078450393"
+        };
+        firebase.initializeApp(config);
+
+    </script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/2.6.2/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.6.2/firebaseui.css" />
+
+
+    <title>DBA Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+
+<body>
+    <div id="firebaseui-auth-container">
+
+    </div>
+
+    <div class="container dbstatus hide">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1>Database Status</h1>
+            </div>
+            <div class="col-md-8 col-md-offset-2 ">
+                <button type="button" class="btn btn-danger btn-lg btn-mysql">MySQL</button>
+                <button type="button" class="btn btn-danger btn-lg btn-nosql">Firebase NoSQL</button>
+                <button type="button" class="btn btn-danger btn-lg btn-elasticsearch">Elastic Search</button>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+<link rel="stylesheet" href="resources/css/style.css">
+<script src="resources/js/dba.js"></script>
+
+</html>
