@@ -123,14 +123,18 @@ router.post('/updateManager', function (req, res, next) {
 
 router.get('/mysqlStatus', function (req, res, next) {
     console.log('mysqlStatus');
-    if (fs.existsSync('./routes/python/mysqlStatus.py')) {
-        PythonShell.run('./routes/python/mysqlStatus.py', function (err, results) {
-            var sendback = JSON.parse(results)
-            res.status(sendback.status).send(sendback.error);
-        });
-    }
+    PythonShell.run('./routes/python/mysqlStatus.py', function (err, results) {
+        var sendback = JSON.parse(results)
+        res.status(sendback.status).send(sendback.error);
+    });
 })
-
+router.get('/elasticsearchStatus', function (req, res, next) {
+    console.log('elasticSearch');
+    PythonShell.run('./routes/python/elasticsearchStatus.py', function (err, results) {
+        var sendback = JSON.parse(results)
+        res.status(sendback.status).send(sendback.error);
+    });
+})
 
 function addDefault(receivedJSON) {
     switch (receivedJSON.whattoadd) {

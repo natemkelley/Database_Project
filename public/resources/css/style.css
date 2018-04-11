@@ -66,6 +66,7 @@ img {
 
 .dbstatus .btn {
     width: 31.5%;
+    color: white!important
 }
 
 .dbstatus .btn:hover {
