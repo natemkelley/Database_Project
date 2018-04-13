@@ -7,6 +7,7 @@ const https = require('https');
 //IT350 Specific
 var mysql = require('mysql');
 var PythonShell = require('python-shell');
+var NodeJS_python_functions = require('./nodepython/backupMysql.js');
 var db_con = mysql.createConnection({
     host: "localhost",
     user: "root",

@@ -60,7 +60,7 @@ function elasticsearchStatus() {
             $('.btn-elasticsearch').html('Elastic Search <br>Connection Success');
         },
         error: function (jqXHR, execption) {
-            alert(jqXHR.responseText);
+            //alert(jqXHR.responseText);
             $('.btn-elasticsearch').addClass('btn-danger').fadeIn();
             $('.btn-elasticsearch').html('Elastic Search <br>Connection Failed');
         }
