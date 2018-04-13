@@ -67,10 +67,25 @@ function elasticsearchStatus() {
     });
 }
 
+function getListOfBackups() {
+    $.ajax({
+        type: "GET",
+        url: "getListOfBackups",
+        cache: false,
+        success: function (result) {
+            console.log(result);
+        },
+        error: function (jqXHR, execption) {
+            console.log(jqXHR);
+        }
+    });
+}
+
 $(document).ready(function () {
     console.log("ready!");
     setFirebaseUI();
     nosqlStatus();
     MySqlStatus();
     elasticsearchStatus();
+    getListOfBackups();
 });

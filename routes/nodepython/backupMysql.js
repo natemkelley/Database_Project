@@ -4,7 +4,6 @@ var fs = require('fs');
 var PythonShell = require('python-shell');
 var oneDay = 1000 * 60 * 60 * 24;
 
-
 function runBackup() {
 
     if (fs.existsSync('./routes/python/mySQLbackup.py')) {
@@ -18,7 +17,6 @@ function runBackup() {
 
 
 runBackup();
-
 setInterval(function () {
     runBackup();
 }, oneDay);

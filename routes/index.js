@@ -141,6 +141,13 @@ router.get('/elasticsearchStatus', function (req, res, next) {
         res.status(sendback.status).send(sendback.error);
     });
 })
+router.get('/getListOfBackups', function (req, res, next) {
+    PythonShell.run('./routes/python/seeBackups.py', function (err, results) {
+        var sendback = JSON.parse(results)
+        console.log(results);
+        res.status(200).send(sendback);
+    });
+})
 
 function addDefault(receivedJSON) {
     switch (receivedJSON.whattoadd) {
