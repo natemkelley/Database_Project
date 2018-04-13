@@ -79,3 +79,8 @@ img {
     border-color: #4cae4c;
     transition: 1.0s;
 }
+
+tab {
+    margin-left: 33px;
+    margin-right: 5px;
+}

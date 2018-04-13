@@ -73,11 +73,22 @@ function getListOfBackups() {
         url: "getListOfBackups",
         cache: false,
         success: function (result) {
-            console.log(result);
+            displayBackups(result);
         },
         error: function (jqXHR, execption) {
             console.log(jqXHR);
         }
+    });
+}
+
+function displayBackups(data) {
+    console.log(data);
+    $.each(data, function (i, item) {
+        console.log(i);
+        console.log(item[0]);
+        var string = i + "<tab>" + item[0].month + "/" + item[0].day + "/" + item[0].year;
+        $('#backups-list').append("<li>" + string + "</li>")
+
     });
 }
 
