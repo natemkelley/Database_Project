@@ -96,12 +96,31 @@ function getOptimizations() {
         url: "getOptimizations",
         cache: false,
         success: function (result) {
-            console.log(result);
+            displayOpt(result);
         },
         error: function (jqXHR, execption) {
             console.log(jqXHR);
         }
     });
+}
+
+function displayOpt(data) {
+    var length = Object.keys(data).length;
+    console.log(length);
+
+    var table = "<table>";
+
+    for (i = 0; i < length; i++) {
+        console.log(data[i]);
+        console.log(data[i + 1]);
+        table += "<tr>"
+        table += "<td style='min-width: 200px; padding-right:5px'>" + data[i] + "</td>";
+        table += "<td>" + data[i + 1] + "</td>";
+        table += "</tr>"
+        i++;
+    }
+    table += "</table>"
+    $('#dbuse-opt').html(table)
 }
 
 $(document).ready(function () {
