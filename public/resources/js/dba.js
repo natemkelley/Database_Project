@@ -1,5 +1,5 @@
 firebase.auth().onAuthStateChanged(function (user) {
-    console.log(user);
+    //console.log(user);
     if (user) {
         $('div').removeClass('hide');
         $('#firebaseui-auth-container').addClass('hide');
@@ -11,7 +11,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 function nosqlStatus() {
     firebase.database().ref('/').once('value').then(function (snapshot) {
-        console.log(snapshot.val());
+        //console.log(snapshot.val());
         $('.btn-nosql').addClass('btn-success').fadeIn();
         $('.btn-nosql').html('Firebase NoSQL <br>Connection Success');
     });
@@ -38,7 +38,7 @@ function MySqlStatus() {
         url: "mysqlStatus",
         cache: false,
         success: function (result) {
-            console.log(result);
+            //console.log(result);
             $('.btn-mysql').addClass('btn-success').fadeIn();
             $('.btn-mysql').html('MySQL <br>Connection Success');
         },
@@ -55,7 +55,7 @@ function elasticsearchStatus() {
         url: "elasticsearchStatus",
         cache: false,
         success: function (result) {
-            console.log(result);
+            //console.log(result);
             $('.btn-elasticsearch').addClass('btn-success').fadeIn();
             $('.btn-elasticsearch').html('Elastic Search <br>Connection Success');
         },
@@ -82,21 +82,33 @@ function getListOfBackups() {
 }
 
 function displayBackups(data) {
-    console.log(data);
+    //console.log(data);
     $.each(data, function (i, item) {
-        console.log(i);
-        console.log(item[0]);
         var string = i + "<tab>" + item[0].month + "/" + item[0].day + "/" + item[0].year;
         $('#backups-list').append("<li>" + string + "</li>")
 
     });
 }
 
+function getOptimizations() {
+    $.ajax({
+        type: "GET",
+        url: "getOptimizations",
+        cache: false,
+        success: function (result) {
+            console.log(result);
+        },
+        error: function (jqXHR, execption) {
+            console.log(jqXHR);
+        }
+    });
+}
+
 $(document).ready(function () {
-    console.log("ready!");
     setFirebaseUI();
     nosqlStatus();
     MySqlStatus();
     elasticsearchStatus();
     getListOfBackups();
+    getOptimizations();
 });

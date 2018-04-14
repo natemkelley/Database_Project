@@ -148,6 +148,20 @@ router.get('/getListOfBackups', function (req, res, next) {
         res.status(200).send(sendback);
     });
 })
+router.get('/getOptimizations', function (req, res, next) {
+    PythonShell.run('./routes/python/writeOptimizations.py', function (err, results) {
+        //console.log(err);
+    });
+    PythonShell.run('./routes/python/seeOptimizations.py', function (err, results) {
+        var sendback = JSON.parse(results)
+        console.log(results);
+        res.status(200).send(sendback);
+    });
+
+    //res.status(200).send('swag');
+
+})
+
 
 function addDefault(receivedJSON) {
     switch (receivedJSON.whattoadd) {
