@@ -19,7 +19,6 @@ function logUserData(user) {
     });
 }
 
-
 function getNOSQL() {
     firebase.database().ref('complaints/').once('value').then(function (snapshot) {
         console.log(snapshot.val());
@@ -40,7 +39,8 @@ function submitNOSQL() {
     firebase.database().ref('complaints/' + d).set({
         username: name,
         email: email,
-        profile_picture: imageUrl
+        profile_picture: imageUrl,
+        date: new Data()
     });
 
     alert("refresh page to see updates");

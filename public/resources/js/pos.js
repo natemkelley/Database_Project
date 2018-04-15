@@ -1,7 +1,6 @@
 console.log('loading pos');
 
 
-
 function submitCust() {
     //alert('pressed');
 

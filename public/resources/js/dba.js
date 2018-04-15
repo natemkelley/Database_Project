@@ -9,11 +9,36 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 
-function nosqlStatus() {
+function nosqlStatus_get() {
     firebase.database().ref('/').once('value').then(function (snapshot) {
         //console.log(snapshot.val());
         $('.btn-nosql').addClass('btn-success').fadeIn();
         $('.btn-nosql').html('Firebase NoSQL <br>Connection Success');
+        displayNoSQL(snapshot.val())
+    });
+}
+
+function displayNoSQL(data) {
+    console.log(data);
+    data2 = data.complaints;
+    $.each(data2, function (i, item) {
+        //console.log(item);
+        var table = "<tr><td>" + item.datdate + "</td>";
+        table += "<td>" + item.username + "</td>";
+        table += "<td>" + item.complaint + "</td>";
+        table += "<td>" + item.email + "</td></tr>";
+
+        $('#fb-usage').append(table).hide().fadeIn('slow');
+    });
+    data2 = data.log_users;
+    $.each(data2, function (i, item) {
+        console.log(item);
+        var table = "<tr><td>" + item.creationTime + "</td>";
+        table += "<td>" + item.lastSignInTime + "</td>";
+        table += "<td>" + item.displayName + "</td>";
+        table += "<td>" + item.email + "</td></tr>";
+
+        $('#fb-usage-2').append(table).hide().fadeIn('slow');
     });
 
 }
@@ -84,9 +109,8 @@ function getListOfBackups() {
 function displayBackups(data) {
     //console.log(data);
     $.each(data, function (i, item) {
-        var string = i + "<tab>" + item[0].month + "/" + item[0].day + "/" + item[0].year;
-        $('#backups-list').append("<li>" + string + "</li>")
-
+        var string = i + "<tab> Backup performed on " + item[0].month + "/" + item[0].day + "/" + item[0].year;
+        $('#backups-list').append("<li>" + string + "</li>").fadeIn();
     });
 }
 
@@ -106,13 +130,13 @@ function getOptimizations() {
 
 function displayOpt(data) {
     var length = Object.keys(data).length;
-    console.log(length);
+    //console.log(length);
 
     var table = "<table>";
 
     for (i = 0; i < length; i++) {
-        console.log(data[i]);
-        console.log(data[i + 1]);
+        //console.log(data[i]);
+        //console.log(data[i + 1]);
         table += "<tr>"
         table += "<td style='min-width: 200px; padding-right:5px'>" + data[i] + "</td>";
         table += "<td>" + data[i + 1] + "</td>";
@@ -120,12 +144,12 @@ function displayOpt(data) {
         i++;
     }
     table += "</table>"
-    $('#dbuse-opt').html(table)
+    $('#dbuse-opt').html(table).fadeIn();
 }
 
 $(document).ready(function () {
     setFirebaseUI();
-    nosqlStatus();
+    nosqlStatus_get();
     MySqlStatus();
     elasticsearchStatus();
     getListOfBackups();

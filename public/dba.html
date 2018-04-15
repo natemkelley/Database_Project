@@ -54,10 +54,26 @@
             </div>
             <div class="col-md-8 col-md-offset-2 " id="dbuse-mysql">
                 <h3>MySQL</h3>
-
+                <p>Optimization queries are shown below under DATABASE OPTIMIZATIONS which demostrate the database if being used</p>
             </div>
             <div class="col-md-8 col-md-offset-2 " id="dbuse-nosql">
                 <h3>Firebase NoSQL</h3>
+                <table id="fb-usage">
+                    <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Complaint</th>
+                        <th>eMail</th>
+                    </tr>
+                </table>
+                <table id="fb-usage-2" style="margin-top: 30px">
+                    <tr>
+                        <th>Creation Time</th>
+                        <th>Display Name</th>
+                        <th>Email</th>
+                        <th>lastSignInTime</th>
+                    </tr>
+                </table>
             </div>
             <div class="col-md-8 col-md-offset-2 " id="dbuse-elasticsearch">
                 <h3>Elastic Search</h3>
@@ -65,10 +81,11 @@
         </div>
     </div>
 
-    <div class="container dbstatus hide" style="background-color: azure;margin-top: 50px">
+    <div class="container dbstatus hide" style="background-color: #f4dafb;margin-top: 50px">
         <div class="row">
             <div class="col-md-12 text-center">
                 <h1>Database Queries that could be optimized</h1>
+                <p>The top seven queries are sorted from longest amount (top) to shortest</p>
             </div>
             <div class="col-md-8 col-md-offset-2 " id="dbuse-opt">
 

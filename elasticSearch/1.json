@@ -1,0 +1,67 @@
+//https://www.codementor.io/ashish1dev/getting-started-with-elasticsearch-du107nett
+
+//Creating an Index
+// http://localhost:9200/company
+
+PUT {
+    "settings": {
+        "index": {
+            "number_of_shards": 1,
+            "number_of_replicas": 1
+        },
+        "analysis": {
+            "analyzer": {
+                "analyzer-name": {
+                    "type": "custom",
+                    "tokenizer": "keyword",
+                    "filter": "lowercase"
+                }
+            }
+        },
+        "mappings": {
+            "employee": {
+                "properties": {
+                    "age": {
+                        "type": "long"
+                    },
+                    "experience": {
+                        "type": "long"
+                    },
+                    "name": {
+                        "type": "string",
+                        "analyzer": "analyzer-name"
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+//Inserting Data
+http: //localhost:9200/company/employee/?_create
+    POST {
+        "name": "Andrew",
+        "age": 45,
+        "experience": 10
+    }
+
+
+//Retrieving Data
+//http://localhost:9200/company/employee/_search
+//conditional search
+http: //localhost:9200/company/employee/_search
+    GET {
+        "query": {
+            "match_all": {}
+        }
+    }
+
+GET {
+    "query": {
+        "match": {
+            "name": "Andrew"
+        }
+    }
+}
