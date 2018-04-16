@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Public Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="resources/css/style.css">
+</head>
+
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1>Elastic Search Panel</h1>
+                <h3>Employees can submit their favorite books or quotes to help with moral</h3>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="form-group">
+                    <label for="search">Search:</label>
+                    <input type="search" class="form-control" id="search">
+                </div>
+                <button onclick="getElResults()" class="btn btn-default">Submit</button>
+            </div>
+        </div>
+    </div>
+    <div class="container" id="appendSearch">
+
+    </div>
+</body>
+
+</html>
+
+
+
+<script>
+    function getElResults() {
+        var search = $('#search').val();
+        alert(search);
+        $.ajax({
+            type: "GET",
+            url: "192.168.50.33:9200/_search?q=" + search,
+            cache: false,
+            success: function(result) {
+                console.log('swag')
+                console.log(result);
+            },
+            error: function(jqXHR, execption) {
+                console.error(execption);
+            }
+        });
+
+
+
+
+        $.getJSON('http://192.168.50.33:80/getCustomers', function(data) {
+            console.log(data);
+        });
+    }
+
+</script>
